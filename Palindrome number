@@ -1,0 +1,50 @@
+/*
+Given an integer x, return true if x is a palindrome, and false otherwise.
+*/
+
+
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x  <0 || (x%10 ==0 && x!=0))
+        {
+            return false;
+        }
+        int r = 0;
+        while(x>r)
+        {
+            r = r*10+ x%10;
+            x = x/10;
+        }
+        if(x == r || x== r/10)
+            return true;
+        return false;
+    //     int i,j,r,k;
+    //     int a[100]={0};
+    //     i=0;
+    //     while(x>9)
+    //     {
+    //         r = x%10;
+    //         a[i] = r;
+    //         i++;
+    //         x = x/10;
+    //     }
+    //     k = i;
+    //     for(j=0;j<i/2 && k>i/2;j++)
+    //     {
+    //         if(a[j] == a[k])
+    //         {
+    //             k--;
+    //         }
+    //         else
+    //         {
+    //             break;
+    //         }
+    //     }
+    //     if(j==(i/2) && k== (i/2))
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    }
+};
