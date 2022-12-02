@@ -1,0 +1,42 @@
+/*
+Given two binary strings a and b, return their sum as a binary string.
+
+*/
+
+/* 
+String builder is a built in class which can create mutable strings whereas the java String class does not allow us to create mutable String
+String bulider is prone to threading issues 
+We can perform many opeartions on string builder class such as reverse etc
+String bulider class does not need us to specify the size of String It just requires us to declare a variable with constructor and new keyboard
+
+*/
+
+
+class Solution {
+    public String addBinary(String a, String b) {
+        int c=0;
+        StringBuilder res = new StringBuilder();
+        int i,j;
+        i = a.length()-1;
+        j = b.length()-1;
+        while(i>=0 || j>=0)
+        {
+            int sum= c;
+            if(i>=0)
+            {
+                sum = sum + (a.charAt(i--) - '0');
+            }
+            if(j>=0)
+            {
+                sum = sum + (b.charAt(j--) - '0');
+            }
+            res.append(sum%2);
+            c = sum/2;
+        }
+        if(c!=0)
+        {
+            res.append(c);
+        }
+        return res.reverse().toString();
+    }
+}
