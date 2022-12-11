@@ -1,0 +1,60 @@
+class Solution {
+    public int mySqrt(int x) {
+        if (x <= 1) return x;
+long i = 1;
+long sq = i * i;
+while (x >= sq) {
+	i++;
+	sq = i * i;
+}
+return (int) (i - 1);
+
+
+        // int half = (x/2);
+        // while(half*half > x)
+        // {
+        //     half = half/2;
+        // }
+        // while(half*half <= x)
+        // {
+        //     half++;
+
+        // }
+        // return --half;
+
+        // int i,t,found=0;
+        // i = 1;
+        // while(found == 0)
+        // {
+        //     if(i*i == x)
+        //     {
+        //         found =1;
+        //         return i;
+        //     }
+        //     else if(i*i > x)
+        //     {
+        //         found =1;
+        //         return i-1;
+        //     }
+        //     i++;
+        // }
+        // return i;
+        // // int sq,z,y;
+        // int r;
+        // // y = x;
+        // // z = (y+(x/y))/2;
+        // r=x;
+        // while(r*r > x)
+        // {
+        //     r = (r+x/r)/2;
+        // }
+        // return r;
+        // // sq = i*i;
+        // // while(sq<=x)
+        // // {
+        // //     i++;
+        // //     sq = i*i;
+        // // }
+        // // return (int)(i-1);
+    }
+}
