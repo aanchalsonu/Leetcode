@@ -1,0 +1,43 @@
+/*You are climbing a staircase. It takes n steps to reach the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+ 
+ */
+ 
+ class Solution {
+    // int fact(int n)
+    // {
+    //     if(n == 0 || n == 1)
+    //     {
+    //         return 1;
+    //     }
+    //     return n*fact(n-1);
+    // }
+    public int climbStairs(int n) {
+        if(n==1)
+        return 1;
+        if(n==2)
+        return 2;
+        //fibbonacci series implimentation
+
+        int num1=0;
+        int num2 =1;
+        int num3=0;
+        int c=0;
+        while(c < n)
+        {
+            num3 = num1+num2;
+            num1 = num2;
+            num2 = num3;
+            c++;
+        }
+        return num3;
+
+
+        // int nu=0,dn=0,r=2;
+        // nu = fact(n);
+        // dn = fact(n-2);
+        // return (nu/(dn*r))-1;
+    }
+}
