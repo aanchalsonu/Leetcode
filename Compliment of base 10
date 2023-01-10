@@ -1,0 +1,29 @@
+/*
+The complement of an integer is the integer you get when you flip all the 0's to 1's and all the 1's to 0's in its binary representation.
+
+For example, The integer 5 is "101" in binary and its complement is "010" which is the integer 2.
+Given an integer n, return its complement.
+*/
+
+class Solution {
+public:
+    int bitwiseComplement(int n) {
+        //when negation(n) and mask is done we get the right answer
+        //because negation will give 1's sompliment but the left side bit sare remained 1 and not needed that is why masking is done
+        //mask = first mask=0
+        //left shift mask by 1 and or it with 1 till your number has one ie:till n is not 0
+        //and at the same time right shift the number n
+
+        int m,mask=0;
+        m=n;
+        if(n==0)
+        return 1;
+        while(m!=0)
+        {
+            mask = (mask<<1)|1;
+            m = m>>1;
+        }
+        n = (~n)&mask;
+        return n;
+    }
+};
