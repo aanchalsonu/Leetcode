@@ -1,0 +1,44 @@
+/*
+
+Given an array of intervals intervals where intervals[i] = [starti, endi], return the minimum number of intervals you need to
+remove to make the rest of the intervals non-overlapping.
+
+ 
+
+Example 1:
+
+Input: intervals = [[1,2],[2,3],[3,4],[1,3]]
+Output: 1
+Explanation: [1,3] can be removed and the rest of the intervals are non-overlapping.
+Example 2:
+
+Input: intervals = [[1,2],[1,2],[1,2]]
+Output: 2
+Explanation: You need to remove two [1,2] to make the rest of the intervals non-overlapping.
+Example 3:
+
+Input: intervals = [[1,2],[2,3]]
+Output: 0
+Explanation: You don't need to remove any of the intervals since they're already non-overlapping.
+
+class Solution {
+public:
+    static bool comperator(vector<int> &a, vector<int> &b){
+    return a[1] < b[1];
+}
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        int i,j;
+        sort(intervals.begin(), intervals.end(), comperator); //sort the array according to the intervals[i][1] ie according to end points 
+        int cnt=0;
+        int e = intervals[0][1]; //initially end will be intervals[0][1];
+        for(i=1;i<intervals.size();i++)
+        {
+            if(intervals[i][0] < e)//check karo ke agar next interval ka start less hai end sa tho count increase hoga agar nahi tho phir end 
+            change hoga to the intervals[i][1]
+            cnt++;
+            else
+            e = intervals[i][1];
+        }
+        return cnt;
+    }
+};
