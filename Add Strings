@@ -1,0 +1,58 @@
+/*
+Given two non-negative integers, num1 and num2 represented as string, return the sum of num1 and num2 as a string.
+
+You must solve the problem without using any built-in library for handling large integers (such as BigInteger). You must also not convert the
+inputs to integers directly.
+
+ 
+
+Example 1:
+
+Input: num1 = "11", num2 = "123"
+Output: "134"
+Example 2:
+
+Input: num1 = "456", num2 = "77"
+Output: "533"
+Example 3:
+
+Input: num1 = "0", num2 = "0"
+Output: "0"
+
+*/
+
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        // long int x = stoi(num1);
+        // long int y = stoi(num2);
+        // long int z = x+y;
+        // return to_string(z);
+
+        int c=0,i=num1.length()-1,j= num2.length()-1;
+        string ans = "";
+        while(i>=0 || j>=0 || c>0)
+        {
+            if(i>=0)
+            {
+              //first add the last two digits of numbers
+                c += num1[i]-'0';
+                i--;
+            }
+            if(j>=0)
+            {
+                c += num2[j]-'0';
+                j--;
+            }
+            // convert the number into string where c%10 will be remainder if number is greater than 0 and c/10 will be the carry for next sum
+           // so add remainder and keep carry for the next additon process
+            ans += (c%10 +'0');
+            c = c/10;
+        }
+        //Reverse the string and that will be the answer
+        reverse(ans.begin(),ans.end());
+        return ans;
+
+
+    }
+};
