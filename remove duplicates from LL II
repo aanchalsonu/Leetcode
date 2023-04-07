@@ -1,0 +1,82 @@
+/*
+
+Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+Return the linked list sorted as well.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,3,4,4,5]
+Output: [1,2,5]
+Example 2:
+
+
+Input: head = [1,1,1,2,3]
+Output: [2,3]
+ 
+
+Constraints:
+
+The number of nodes in the list is in the range [0, 300].
+-100 <= Node.val <= 100
+
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    // static bool cmp(pair<int,int> a, pair<int,int> b)
+    // {
+    //     return a.second<b.second;
+    // }
+    ListNode* deleteDuplicates(ListNode* head) {
+        unordered_map<int,int> mp;
+
+        ListNode* temp = head;
+        ListNode* res = new ListNode(-1);
+        ListNode* ans = res;
+        while(temp)
+        {
+            mp[temp->val]++;
+            temp = temp->next;
+        }
+        vector<int> v;
+        // sort(mp.begin(),mp.end(),cmp);
+        for(auto itr : mp)
+        {
+            if(itr.second == 1)
+            v.push_back(itr.first);
+        }
+        sort(v.begin(),v.end());
+        for(int i=0;i<v.size();i++)
+        {
+            ListNode * t = new ListNode(v[i]);
+            ans->next = t;
+            ans = ans->next;
+        }
+
+
+
+        // for(auto itr : mp)
+        // {
+        //     if(itr.second == 1)
+        //     {
+        //         ListNode * t = new ListNode(itr.first);
+        //         ans->next = t;
+        //         ans = ans->next;
+        //     }
+        // }
+        return res->next;
+    }
+};
