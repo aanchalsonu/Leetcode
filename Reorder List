@@ -1,0 +1,82 @@
+/*
+You are given the head of a singly linked-list. The list can be represented as:
+
+L0 → L1 → … → Ln - 1 → Ln
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4]
+Output: [1,4,2,3]
+Example 2:
+
+
+Input: head = [1,2,3,4,5]
+Output: [1,5,2,4,3]
+
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+
+    void reorderList(ListNode* head) {
+
+        vector<ListNode*> arr;
+        //push into the array all the iterator pointers of the node
+        for(auto itr=head;itr; itr=itr->next)
+        arr.push_back(itr); 
+
+
+        //now traverse the array from last and first and alternatively join the pointers using aray 
+        int l =1, r=arr.size()-1;
+        for(int i=0;i<arr.size();i++,head=head->next)
+        {
+            if(i & 1)
+            head->next = arr[l++];
+            else
+            head->next = arr[r--];
+        }
+        head->next = NULL;
+
+
+
+
+
+
+
+
+
+        // ListNode* curr = head;
+        // ListNode* agla=NULL;
+        // ListNode* lastsecond = NULL;
+        // ListNode* last =head;
+        // while(last->next != NULL)
+        // {
+        //     lastsecond = last;
+        //     last = last->next;
+        // }
+
+
+        // agla = curr->next;
+        // curr->next = last;
+        // lastsecond->next=NULL;
+        // last->next = reorderList(agla);
+        // return curr;
+    }
+};
