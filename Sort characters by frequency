@@ -1,0 +1,91 @@
+/*
+Given a string s, sort it in decreasing order based on the frequency of the characters. The frequency of a character is the number
+of times it appears in the string.
+
+Return the sorted string. If there are multiple answers, return any of them.
+
+ 
+
+Example 1:
+
+Input: s = "tree"
+Output: "eert"
+Explanation: 'e' appears twice while 'r' and 't' both appear once.
+So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
+Example 2:
+
+Input: s = "cccaaa"
+Output: "aaaccc"
+Explanation: Both 'c' and 'a' appear three times, so both "cccaaa" and "aaaccc" are valid answers.
+Note that "cacaca" is incorrect, as the same characters must be together.
+Example 3:
+
+Input: s = "Aabb"
+Output: "bbAa"
+Explanation: "bbaA" is also a valid answer, but "Aabb" is incorrect.
+Note that 'A' and 'a' are treated as two different characters.
+
+*/
+
+class Solution {
+public:
+    string frequencySort(string s) {
+        unordered_map<char,int> mp;
+        int i;
+        //first find all the occurences of the character and their frequency using map
+        for(i=0;i<s.length();i++)
+        {
+            mp[s[i]]++;
+        }
+
+        // can also be done using priority queue
+        priority_queue<pair<int,char>> pq;
+        for(auto itr:mp){             //push them in queue and also reverse them to sort according to frequency
+            pq.push(pair(itr.second,itr.first));
+        }
+
+        string ans="";
+        while(pq.empty()==false){    // while popping elements add the character in the answer string
+            pair temp=pq.top();
+            pq.pop();
+            while(temp.first--){
+                ans +=temp.second;
+                }
+
+        }
+        return ans;
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //inorder to sort the array in decending order first converet it into vector of pairs and apply sort function 
+        // vector<pair<char,int>> v;
+        // for(auto itr : mp)
+        // {
+        //     v.push_back({itr.second,itr.first});
+        // }
+        //sort the vector of pairs
+        // sort(v.rbegin(),v.rend());
+
+        //now convert the sorted array into resultant string
+        // for(i=0;i<v.size();i++)
+        // {
+        //     pair temp = v[i];
+        //     while(temp.first--)
+        //     {
+        //         res += temp.second;
+        //     }
+        // }
+        // return res;
+    }
+};
+ 
