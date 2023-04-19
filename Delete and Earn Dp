@@ -1,0 +1,79 @@
+/*
+You are given an integer array nums. You want to maximize the number of points you get by performing the following operation any number of times:
+
+Pick any nums[i] and delete it to earn nums[i] points. Afterwards, you must delete every element equal to nums[i] - 1
+and every element equal to nums[i] + 1.
+Return the maximum number of points you can earn by applying the above operation some number of times.
+
+ 
+
+Example 1:
+
+Input: nums = [3,4,2]
+Output: 6
+Explanation: You can perform the following operations:
+- Delete 4 to earn 4 points. Consequently, 3 is also deleted. nums = [2].
+- Delete 2 to earn 2 points. nums = [].
+You earn a total of 6 points.
+Example 2:
+
+Input: nums = [2,2,3,3,3,4]
+Output: 9
+Explanation: You can perform the following operations:
+- Delete a 3 to earn 3 points. All 2's and 4's are also deleted. nums = [3,3].
+- Delete a 3 again to earn 3 points. nums = [3].
+- Delete a 3 once more to earn 3 points. nums = [].
+You earn a total of 9 points.
+ 
+ 
+ */
+ 
+ class Solution {
+public:
+    int t[20001];  // dp array
+    int solve(vector<int>& nums, int i)
+    {
+        //base case
+        if(i >= nums.size())
+        return 0;
+
+        //base case of dp
+        if(t[i] != -1)
+        {
+            return t[i];
+        }
+
+        //here consider 3 values 
+        //1. currval , currsum and index which is i+1
+        int currval = nums[i]; //pointing th current num
+        int currsum = nums[i]; // currsum is the sum of all the similar values not in left or right
+        int index =i+1; // pointing to next element
+
+        //first check all the elements on right of the current value 
+        //if the value at nums[index] is equal to currval then add that number to currsum 
+        
+        while(index < nums.size() && nums[index] == currval)
+        {
+            currsum += nums[index];
+            index++;
+        }
+
+        //if nums[index] is equal to currval+1 then we just have to continue with the index 
+        //and increment the value of index without including it in currsum
+        while(index < nums.size() && nums[index] == currval+1)
+        {
+            index++;
+        }
+
+        //now place the max value in t[i]
+        return t[i] = max(currsum + solve(nums,index) , solve(nums,i+1));
+
+    }
+
+    int deleteAndEarn(vector<int>& nums) {
+        int n = nums.size();
+        memset(t, -1, sizeof(t));//create the array for dp series 
+        sort(nums.begin(),nums.end());//sort the array
+        return solve(nums,0);
+    }
+};
