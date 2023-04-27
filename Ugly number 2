@@ -35,16 +35,52 @@ Seen this question in a real interview before?
 class Solution {
 public:
     int nthUglyNumber(int n) {
-        set<long> set;
-        long nthNumber = 1;
-        set.insert(nthNumber);
-        for(int i=0; i<n; i++){
-            nthNumber = *set.begin();
-            set.erase(nthNumber);
-            set.insert(nthNumber*2);
-            set.insert(nthNumber*3);
-            set.insert(nthNumber*5);
+
+        //THE IDEA HERE IS THAT THE MINIMUM NUMBER FROM K[I-1] MULTIPLIED BY 2,3, OR 5 WILL BE THE NEXT NUMBER
+        //FIND THE NEXT NUMBER AND JUST INCREMENT TH EPOINTERS , ANSWER WILL BE K[N-1]
+        int i,j,t2=0,t3=0,t5=0;
+        vector<int> k(n);
+
+        k[0] = 1;
+        for(i=1;i<n;i++)
+        {
+            k[i] = min(k[t2]*2 , min(k[t3]*3,k[t5]*5));
+            if(k[i] == k[t2]*2)
+            t2++;
+            if(k[i] == k[t3]*3)
+            t3++;
+            if(k[i] == k[t5]*5)
+            t5++; 
         }
-        return nthNumber;
+        return k[n-1];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // set<long> set;
+        // long nthNumber = 1;
+        // set.insert(nthNumber);
+        // for(int i=0; i<n; i++){
+        //     nthNumber = *set.begin();
+        //     set.erase(nthNumber);
+        //     set.insert(nthNumber*2);
+        //     set.insert(nthNumber*3);
+        //     set.insert(nthNumber*5);
+        // }
+        // return nthNumber;
     }
 };
