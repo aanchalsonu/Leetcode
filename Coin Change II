@@ -1,0 +1,78 @@
+/*
+
+You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+
+Return the number of combinations that make up that amount. If that amount of money cannot be made up by any combination of the coins, return 0.
+
+You may assume that you have an infinite number of each kind of coin.
+
+The answer is guaranteed to fit into a signed 32-bit integer.
+
+ 
+
+Example 1:
+
+Input: amount = 5, coins = [1,2,5]
+Output: 4
+Explanation: there are four ways to make up the amount:
+5=5
+5=2+2+1
+5=2+1+1+1
+5=1+1+1+1+1
+Example 2:
+
+Input: amount = 3, coins = [2]
+Output: 0
+Explanation: the amount of 3 cannot be made up just with coins of 2.
+Example 3:
+
+Input: amount = 10, coins = [10]
+Output: 1
+ 
+
+Constraints:
+
+1 <= coins.length <= 300
+1 <= coins[i] <= 5000
+All the values of coins are unique.
+0 <= amount <= 5000
+
+*/
+
+
+class Solution {
+public:
+
+    int solve(int idx,int amt,vector<int>& coins,vector<vector<int>> &dp)
+    {
+        //this is for the case where the guven number i smultiple of amount then the given number in coins[idx] can be used multiple number of times to form the target
+        if(idx == 0)
+        {
+            return (amt%coins[0]==0);
+        }
+
+        if(dp[idx][amt] != -1)
+        return dp[idx][amt];
+
+        //2 options available hai ,take and notake
+        int notake = solve(idx-1,amt,coins,dp);
+
+        int take=0;
+        if(coins[idx] <= amt)
+        {
+            //no need to decrease the index , we check if there is any possible answer for the given index position by being in the same index and just decreasing the value of amount
+            take = solve(idx,amt-coins[idx],coins,dp);
+        }
+
+        return dp[idx][amt] = take+notake;
+        
+    }
+ 
+
+    int change(int amount, vector<int>& coins) {
+       int n = coins.size();
+       vector<vector<int>> dp(n,vector<int>(amount+1,-1));
+       //start from the last index and then start checking at each index
+       return solve(n-1,amount,coins,dp);
+    }
+};
