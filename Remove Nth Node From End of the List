@@ -1,0 +1,117 @@
+/*
+
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+Example 2:
+
+Input: head = [1], n = 1
+Output: []
+Example 3:
+
+Input: head = [1,2], n = 1
+Output: [1]
+ 
+
+Constraints:
+
+The number of nodes in the list is sz.
+1 <= sz <= 30
+0 <= Node.val <= 100
+1 <= n <= sz
+
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    // ListNode* reverse(ListNode * root)
+    // {
+    //     ListNode* curr = root;
+    //     ListNode* prev = NULL;
+    //     ListNode* forw = NULL;
+
+    //     while(curr != NULL)
+    //     {
+    //         forw = curr->next;
+    //         curr->next = prev;
+    //         prev = curr;
+    //         curr = forw;
+    //     }
+
+    //     return prev;
+    // }
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+
+        /* Bahut he simple sa funda hai , 2 pointers lo ek slow aur ek fast
+        fast ko tab tak increment karo jab tak n ke value greater than zero hai , aur phir 
+        slow pointer aur fast pointer dono ko sath mai chala lo , jab tak hamara fast NULL nahi hojata.
+        Ab slow point kar raha hai waha m=, jo node hame delete karna hia tho bus pointers ke next values change kardo*/
+        
+
+        ListNode* temp=new ListNode();
+        temp->next=head;
+
+        ListNode* fast=temp;
+        ListNode* slow=temp;
+
+        for(int i=1;i<=n;i++){
+             fast=fast->next;
+        }
+
+        while(fast->next!=NULL){
+            fast=fast->next;
+            slow=slow->next;
+        }
+
+        ListNode* gaya=slow->next;
+        slow->next=slow->next->next;
+        delete(gaya);
+        
+        return temp->next;
+
+
+
+
+
+
+
+
+
+
+
+
+        // ListNode * temp = reverse(head);
+        // ListNode* curr = temp;
+        // ListNode* prev = NULL;
+        // ListNode* forw = NULL;
+
+        // if(n <1)
+        // return NULL;
+        // while(n>1)
+        // {
+        //     prev = curr;
+        //     curr = curr->next;
+        //     forw = curr->next;
+        //     n--;
+        // }
+
+        // prev->next = forw;
+        // return reverse(temp);
+    }
+};
