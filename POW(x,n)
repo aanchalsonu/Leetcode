@@ -1,0 +1,88 @@
+/*
+
+Implement pow(x, n), which calculates x raised to the power n (i.e., xn).
+
+ 
+
+Example 1:
+
+Input: x = 2.00000, n = 10
+Output: 1024.00000
+Example 2:
+
+Input: x = 2.10000, n = 3
+Output: 9.26100
+Example 3:
+
+Input: x = 2.00000, n = -2
+Output: 0.25000
+Explanation: 2-2 = 1/22 = 1/4 = 0.25
+
+*/
+
+
+class Solution {
+public:
+    double power(double x,int n)
+    {
+        if(n == 0)
+        return 1;
+        return x *pow(x,n-1);
+    }
+    double myPow(double x, int n) {
+
+        if (n == INT_MAX) return (x == 1) ? 1 : (x == -1) ? -1 : 0;
+        if (n == INT_MIN) return (x == 1 || x == -1) ? 1 : 0;
+        double num = 1;
+        if(n>=0){
+            num = power(x, n);
+        }
+        else{
+            n = -n;
+            num = power(x, n);
+            num = 1.0/num;
+        }
+        return num;
+
+
+        /*
+            WE USE RECURSIVE CALL TO POWER IN ORDER TO CALCULATE POWER OF A  NUMBER
+            HERE IF N IS NEGATIVE , THEN FIRST CALCULATE THE POWER OF N FOR A POSITIVE VALUE AND THEN TAKE INVERSE OF IT 
+            
+        */
+
+
+
+        // double ans=1;
+        // // if(n%2 != 0)
+        // // {
+        // int y = n;
+        // //     n = n/2;
+        // // }
+        // n = floor(n/2);
+        // // cout<<n<<endl;
+        // if(n<0)
+        // {
+        //     while(n<0)
+        //     {
+        //         ans = ans/x;
+        //         n=n+1;
+        //     }
+        // }
+        // else
+        // {
+        //     while(n>0)
+        //     {
+        //         ans = ans * x;
+        //         n= n-1;
+        //     }
+        // }
+        // ans = ans * ans;
+        // if(y%2 != 0 && y<0)
+        // return ans/x;
+        // else if(y%2 != 0 && y>0)
+        // return ans*x;
+        // else
+        // return ans;
+    }
+};
