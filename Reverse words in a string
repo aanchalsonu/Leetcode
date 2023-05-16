@@ -1,0 +1,54 @@
+/*
+Given a string s, reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+
+ 
+
+Example 1:
+
+Input: s = "Let's take LeetCode contest"
+Output: "s'teL ekat edoCteeL tsetnoc"
+Example 2:
+
+Input: s = "God Ding"
+Output: "doG gniD"
+ 
+ */
+ 
+ class Solution {
+public:
+   void fun(stack<char>&st, vector<char>& str)
+    {
+        while(!st.empty()){
+            str.push_back(st.top());
+            st.pop();
+        }
+        
+    }
+    string reverseWords(string s) {
+        vector<char>str;
+        stack<char>st;
+        for(int i=0;i<s.length();i++)
+        {
+            //if the pointer is pointing to the last character which is a quote just puch it into the stack
+
+            if(i == s.length()-1) str.push_back(s[i]);
+            //if the character is space then just push back the elements froms stack to thr string
+            //here by inserting elements from stack to string we are reversin gits order
+
+            if(s[i] == ' ' || i == s.length()-1)
+            {
+                fun(st,str);
+                //if the end is reached then just pushback the last character
+                if(i != s.length()-1) str.push_back(s[i]);
+            }
+            else{
+                //if character is not space then keep entering it into the stack so that you can reverse it later
+                st.push(s[i]);
+            }
+            
+        }
+        s.clear();
+        string res(str.begin(),str.end());
+        return res;  
+    }
+};
