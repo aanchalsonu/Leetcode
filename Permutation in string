@@ -1,0 +1,132 @@
+/*
+
+Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+
+In other words, return true if one of s1's permutations is the substring of s2.
+
+ 
+
+Example 1:
+
+Input: s1 = "ab", s2 = "eidbaooo"
+Output: true
+Explanation: s2 contains one permutation of s1 ("ba").
+Example 2:
+
+Input: s1 = "ab", s2 = "eidboaoo"
+Output: false
+*/
+
+
+class Solution {
+public:
+
+    bool areEqual(vector<int> a,vector<int> b)
+    {
+        for(int i=0;i<26;i++)
+        {
+            if(a[i] != b[i])
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+    bool checkInclusion(string s1, string s2) {
+
+        /*
+        THE APPROACH IS SIMPLE :
+        PHELA FIND THE FREQUENCY OF S1 STRING AND DTORE IT IN A ARRAY CALLED F1
+        NOW START FINDING THE FREQUENCY OF STRING S2 AND STORE THE FREQUENCY IN THE ARRAY IN F2
+
+        THEN CHECK IF BOTH THE ARRAYS ARE EQUAL 
+        IF THEY ARE EQUAL THEN RETURN TRUE
+        OR ELSE RETURN FALSE;
+
+        THE STEPS TO BE FOLLOWED WHILE CHECKING FOR THE SUBSTRING ARE :
+        KEEP A POINTER I AND J
+        INITIALLY I=0 ADN J=0;
+        RUN A LOOP TILL J IS LESS THAN S2.SIZE
+
+        INSIDE THE LOOP THERE ARE 3 CONDITIONS POSSIBLE:
+        1.INCREMENT THE COUNT OF CHARACTER FOR EVERY J VALUE IN THE ARRAY F2
+        NOW IF THE SIZE OF BOTH THE FREQUENCIES OF THE ARRAY ARE EQUAL THEN CHECK IF THE ARRAYS ARE EQUAL BY CALLING A FUNCTION 
+
+        2.NORMALLY INCREMENT J TO POINT TO THE NEXT LOCATION IF SIZE OF ARRAY F2 IS LESS THEN SIZE OF ARRAY F1
+
+        3.LAST CONDITION : IF SIZES ARE EQUAL AND THE STRINGS DOESNT MATCH EACH OTHER THEN JUST INCREMENT I AND J AND DECREMENT THE COUNT OF S2[I] FROM F2
+        SO THAT THE NEXT SLIDING WINDOW CAN BE CONSIDERED FOR FURTHER PROCESSING
+    
+
+        */
+
+        if(s2.size()<s1.size()) return false;
+        int i,j;
+        vector<int> f1(26,0);
+        vector<int> f2(26,0);
+
+        //to find frequency of string s1
+        for(char c : s1)
+        f1[c-'a']++;
+
+        i=0;
+        j =0;
+        while(j<s2.size())
+        {
+            //firt increment the frequency count 
+            f2[s2[j]-'a']++;
+
+            //2.check if array are equal
+            if(f1.size() == f2.size())
+            {
+                if(areEqual(f1,f2))
+                return true;
+            }
+
+            //3rd condition
+
+            if(j-i+1 < s1.size())
+            j++;
+            else
+            {
+                f2[s2[i]-'a']--;
+                i++;
+                j++;
+            }
+
+        }
+
+        return false;
+
+
+
+
+
+
+
+
+
+
+
+        // set<char> t1;
+        // set<char> t2;
+        // int i=0,j;
+        // int n1 = s1.length();
+        // int n2 =  s2.length();
+        // for(i=0;i<n2;i++)
+        // {
+        //     string temp = s2.substr(i,n1-1);
+        //     for(j=0;j<n1;j++)
+        //     {
+        //         t1.insert(s2[i+j]);
+        //         t2.insert(temp[j]);
+        //     }
+        //     if(t1 == t2)
+        //     return true;
+        // }
+
+        // return false;
+    }
+};
