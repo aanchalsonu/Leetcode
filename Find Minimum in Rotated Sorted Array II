@@ -1,0 +1,63 @@
+/*
+Suppose an array of length n sorted in ascending order is rotated between 1 and n times. For example, the array nums = [0,1,4,4,5,6,7] might become:
+
+[4,5,6,7,0,1,4] if it was rotated 4 times.
+[0,1,4,4,5,6,7] if it was rotated 7 times.
+Notice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 1 time results in the array [a[n-1], a[0], a[1], a[2], ..., a[n-2]].
+
+Given the sorted rotated array nums that may contain duplicates, return the minimum element of this array.
+
+You must decrease the overall operation steps as much as possible.
+
+ 
+
+Example 1:
+
+Input: nums = [1,3,5]
+Output: 1
+Example 2:
+
+Input: nums = [2,2,2,0,1]
+Output: 0
+ 
+
+Constraints:
+
+n == nums.length
+1 <= n <= 5000
+-5000 <= nums[i] <= 5000
+nums is sorted and rotated between 1 and n times.
+*/
+
+
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        // sort(nums.begin(),nums.end());
+        // return nums[0];
+
+        /*
+            THE LOGIC IS 
+            1. IF THE IF THE VALUE AT MID IS EQUAL TO VA;UE AT HIGH THEN JUST DECREASE THE COUNTER HIGH BY 1
+            2. IF THE VALUE AT MID IS GREATER THEN VALUE AT HIGH THEN THE ANSWER LIES IN BETWEEN MID+1 AND HIGH, SO MAKE THE LOW POINTER TO POINT TO MID+1
+            3.IF ANY OF THESE CONDITIONS ARE NOT SATISFIED THEN JUST MAKE HIGH TO POINT TO MID
+        */
+        int mid,low,high;
+        low = 0;
+        high = nums.size()-1;
+
+        while(low<high)
+        {
+            mid = (low+high)/2;
+            if(nums[mid] == nums[high]) //if mid and high are the same
+            high--;
+            else if(nums[mid] > nums[high]) // mid is greater than the high
+            low = mid+1;
+            else 
+            high = mid;
+        }
+
+        return nums[low];
+    }
+
+};
