@@ -1,0 +1,98 @@
+/*
+
+Given an array of positive integers nums and a positive integer target, return the minimal length of a 
+subarray
+ whose sum is greater than or equal to target. If there is no such subarray, return 0 instead.
+
+ 
+
+Example 1:
+
+Input: target = 7, nums = [2,3,1,2,4,3]
+Output: 2
+Explanation: The subarray [4,3] has the minimal length under the problem constraint.
+Example 2:
+
+Input: target = 4, nums = [1,4,4]
+Output: 1
+Example 3:
+
+Input: target = 11, nums = [1,1,1,1,1,1,1,1]
+Output: 0
+ 
+
+Constraints:
+
+1 <= target <= 109
+1 <= nums.length <= 105
+1 <= nums[i] <= 104
+
+*/
+
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        /*
+            TAKE TWO POINTERS I AND J KEEP ADDING INTO THE SUM FROM I=0 UNTIL SUM IS LESS THAN TRGET  ONCE THE TARGET IS REACHED CHECK FOR THE CONDITION WHERE SUM >=TAGET ANS KEEP SUBSTRACTING THE NUMS[J] FROM THE SUM UNTIL TH E SUM IS GRATER THAN THE TARGET NOW
+            THE VALUE OF SIZE OF SUBARRAY SHOULD BE MINMUM CALCULATE THAT BY USING J-I+1
+            AND FIND MINIMUM SUCH VALUE
+
+            IF NOT ABLE TO FIND MINIMUM VALUE RETUTN 0
+            ELSE
+            RETURN ANS;
+        
+        
+        */
+
+
+
+            int i=0,j=0,n;
+            int ans=INT_MAX;
+            n = nums.size();
+            int sum=0;
+
+            while(i<n)
+            {
+                sum += (nums[i]);
+                if(sum<target)
+                {
+                    i++;
+                }
+                else
+                {
+                    while(sum>=target)
+                    {
+                        ans = min(ans,i-j+1);
+                        sum -= nums[j];
+                        j++;
+                    }
+                    i++;
+                }
+            }
+
+            if(ans == INT_MAX)
+            return 0;
+            return ans;
+
+
+        // sort(nums.begin(),nums.end());
+        // int n = nums.size();
+
+        // int sum=0;
+        // int count=0;
+        // for(int i=n-1;i>=0;i--)
+        // {
+        //     sum = sum + nums[i];
+        //     count++;
+        //     if(sum>=target)
+        //     {
+        //         break;
+        //     }
+        // }
+
+        // if(sum< target)
+        // return 0;
+        // else
+        // return count;
+    }
+};
