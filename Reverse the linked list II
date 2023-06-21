@@ -1,0 +1,99 @@
+/*
+Given the head of a singly linked list and two integers left and right where left <= right, reverse the nodes of the list from
+position left to position right, and return the reversed list.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], left = 2, right = 4
+Output: [1,4,3,2,5]
+Example 2:
+
+Input: head = [5], left = 1, right = 1
+Output: [5]
+ 
+
+Constraints:
+
+The number of nodes in the list is n.
+1 <= n <= 500
+-500 <= Node.val <= 500
+1 <= left <= right <= n
+ 
+ 
+ */
+ 
+ /**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode * reverse(ListNode *head)
+    {
+        ListNode * prev = NULL;
+        ListNode * curr = head;
+        ListNode * forw = NULL;
+
+        while(curr != NULL)
+        {
+            forw = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forw;
+        }
+        return prev;
+    }
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+       ListNode * curr = head;
+       ListNode * prev = NULL;
+
+       int count=1;
+       //Left part
+       while(count != left)
+       {
+           prev = curr;
+           curr = curr->next;
+           count++;
+       }
+       ListNode * start = curr;
+
+        //right part
+       while(count != right)
+       {
+           curr = curr->next;
+           count++;
+       }
+       ListNode * rest = curr->next;
+       curr->next = NULL;
+
+        //reverse the middle part
+       ListNode * newhead = reverse(start);
+       if(prev != NULL)
+       {
+           prev->next = newhead;
+       }
+       //Now traverse the array until you reach the right end
+       curr = newhead;
+       while(curr->next != NULL)
+       {
+           curr = curr->next;
+       }
+       curr->next = rest;
+
+       if(left == 1)
+       return newhead;
+       else
+       return head;
+
+
+    }
+};
