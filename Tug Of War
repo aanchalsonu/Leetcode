@@ -1,0 +1,75 @@
+/*
+The main logic is to divide the array into two parts such that the sum of elements in the array is making a minimum absolute difference possible
+
+*/
+#include <iostream>
+#include <stack>
+#include <vector>
+using namespace std;
+
+int mini = 99999;
+stack<int> set1;
+stack<int> set2;
+vector<int> v1;
+vector<int> v2;
+int sumset1 = 0, sumset2 = 0;
+int ans = 0;
+
+void solve(int* arr, int vidx, int n) {
+    //if the index has reached the end ie: half of the size of array or the end then just push the absolute value
+    //of the difference as the answer
+    if (vidx == n) {
+        int delta = abs(sumset1 - sumset2);
+        if (delta < mini) {
+            mini = delta;
+            ans = mini;
+        }
+        return;
+    }
+    
+    //If size of set1 is less than half of the size of arr which means one team is not yet filled then fill the team1 first
+
+    if (set1.size() < ((n + 1) / 2)) {
+        set1.push(arr[vidx]);
+        v1.push_back(arr[vidx]);
+        sumset1 += arr[vidx];
+        solve(arr, vidx + 1, n);
+        sumset1 -= arr[vidx];
+        set1.pop();
+        v1.pop_back();
+    }
+
+    //if the size of other team is still less than the required size then add members to the second team 
+    //also pop back the previous value to do back tracking
+    if (set2.size() < ((n + 1) / 2)) {
+        set2.push(arr[vidx]);
+        v2.push_back(arr[vidx]);
+        sumset2 += arr[vidx];
+        solve(arr, vidx + 1, n);
+        sumset2 -= arr[vidx];
+        set2.pop();
+        v2.pop_back();
+    }
+    
+    //set 1 and set2 are the two teams and ans stores the minimum difference between them
+}
+
+int main() {
+    int arr[] = {23, 45, -34, 12, 0, 98, -99, 4, 189, -1, 4};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    solve(arr, 0, n);
+    cout << ans << endl;
+    
+    for(int num : v1 )
+    {
+        cout<<num<<" ";
+        
+    }
+    cout<<endl;
+    for(int num : v2)
+    {
+        cout<<num<<" ";
+        
+    }
+    return 0;
+}
