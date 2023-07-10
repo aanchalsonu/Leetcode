@@ -1,0 +1,117 @@
+/*
+Given an integer array a[ ] of N elements and an integer K, the task is to check if the array a[ ] could be divided into K non-empty
+subsets with equal sum of elements.
+Note: All elements of this array should be part of exactly one partition.
+
+Example 1:
+
+Input: 
+N = 5
+a[] = {2,1,4,5,6}
+K = 3
+Output: 
+1
+Explanation: we can divide above array 
+into 3 parts with equal sum as (2, 4), 
+(1, 5), (6)
+Example 2:
+
+Input: 
+N = 5 
+a[] = {2,1,5,5,6}
+K = 3
+Output: 
+0
+Explanation: It is not possible to divide
+above array into 3 parts with equal sum.
+
+*/
+
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+/*You are required to complete this method */
+
+class Solution{
+  public:
+  
+  
+  bool solve(int s,int *a,int n, int sum,int k,vector<int> &vis)
+  {
+      //base case : agar sab sets ban chuka hai
+      if(!k)
+      return true;
+      
+      //next check karna ka liya ke agar set bana hai ya nahi 
+      for(int i=0;i<n;i++)
+      {
+          //agar visited hai tho vo number phela he use ho chuka hai tho ieration skip kare
+          if(vis[i])
+          continue;
+          
+          //agar sum equal hogaya hai tho k ke value reduce karna recursive call lare
+          if(s+a[i] == sum)
+          {
+              //phela visited mark kare phir next recursive all kare aur check kare ke possible hai ya nahi 
+              vis[i] = 1;
+              if(solve(0,a,n,sum,k-1,vis))
+              return true;
+              vis[i] =0;
+              
+          }
+          else if(s+a[i] < sum) // agar abhi sum nahi mila hai tho carry on kare
+          {
+              vis[i] =1;
+              if(solve(s+a[i],a,n,sum,k,vis))
+              return true;
+              vis[i]=0;
+          }
+      }
+      return false;
+  }
+  
+  
+    bool isKPartitionPossible(int a[], int n, int k)
+    {
+         //Your code here
+         
+         
+         vector<int> arr(n);
+         int sum=0;
+         for(int i=0;i<n;i++)
+         {
+             sum += a[i];
+         }
+         //agar sum divisible nahi hai k sa tho division possible nahi hai
+         if(sum%k != 0)
+         return false;
+         else
+         return solve(0,a,n,sum/k,k,arr);
+         
+    }
+};
+
+//{ Driver Code Starts.
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+    	int n;
+    	
+    	cin>>n;
+    	int a[n];
+    	for(int i=0;i<n;i++)
+    	cin>>a[i];
+    	int k;
+    	cin>>k;
+    	Solution obj;
+    	cout<<obj.isKPartitionPossible(a, n, k)<<endl;
+    }
+}
+// } Driver Code Ends
