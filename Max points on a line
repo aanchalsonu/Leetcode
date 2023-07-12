@@ -1,0 +1,55 @@
+/*
+
+Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane, return the maximum number of points that lie on the same straight line.
+
+ 
+
+Example 1:
+
+
+Input: points = [[1,1],[2,2],[3,3]]
+Output: 3
+Example 2:
+
+
+Input: points = [[1,1],[3,2],[5,3],[4,1],[2,3],[1,4]]
+Output: 4
+ 
+
+Constraints:
+
+1 <= points.length <= 300
+points[i].length == 2
+-104 <= xi, yi <= 104
+All the points are unique.
+
+*/
+
+class Solution {
+public:
+
+// calculate the slope of the points and then increment the count of slopes
+// in the map. the maximum value will be the output.
+
+//the catch is points with simi,ar slope will form a line and hence the count of points can be found.
+    int maxPoints(vector<vector<int>>& p) {
+        int ans=1;
+        for(int i=0;i<p.size();i++)
+        {
+            unordered_map<double,int> m;
+            for(int j=0;j<p.size();j++)
+            {
+                if(i==j)
+                continue;
+
+                //calculate the slope
+                double num = (double)(p[i][0]-p[j][0])/(p[i][1]-p[j][1]);
+                double val = (num);
+
+                m[val]++;
+                ans = max(ans,m[val]+1);
+            }
+        }
+        return ans;
+    }
+};
