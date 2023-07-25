@@ -1,0 +1,106 @@
+/*
+
+Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically
+neighboring. The same letter cell may not be used more than once.
+
+ 
+
+Example 1:
+
+
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+Output: true
+Example 2:
+
+
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "SEE"
+Output: true
+Example 3:
+
+
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB"
+Output: false
+ 
+
+Constraints:
+
+m == board.length
+n = board[i].length
+1 <= m, n <= 6
+1 <= word.length <= 15
+board and word consists of only lowercase and uppercase English letters.
+
+
+*/
+
+
+class Solution {
+public:
+    bool solve(int row,int col, int idx,vector<vector<char>>& board,vector<vector<bool>> &visited, string word)
+    {
+        //check for the base condition and return true or false accordingly
+        if(idx == word.size())
+        return true;
+
+        if(row>=board.size() || col >= board[0].size() || row <0 || col <0)
+        return false;
+
+        //check if the letter matches the next character and is not allready visited.
+        //if so then search in all 4 directions to find the next letter.
+        //else return false;
+        if(board[row][col] == word[idx] && visited[row][col] == false)
+        {
+            visited[row][col] = true;
+            if(solve(row+1,col,idx+1,board,visited,word) ||
+            solve(row-1,col,idx+1,board,visited,word) ||
+            solve(row,col+1,idx+1,board,visited,word) ||
+            solve(row,col-1,idx+1,board,visited,word))
+            return true;
+            else
+            {
+                visited[row][col] = false;
+                return false;
+            }
+        }
+        return false;
+    }
+
+
+    bool exist(vector<vector<char>>& board, string word) {
+        int n = board.size();
+        vector<vector<bool>> visited;
+
+        //create a visited array which is initially filled with all zeros or flase
+        for(int i=0;i<n;i++)
+        {
+            vector<bool> v(board[0].size());
+            for(int j=0;j<board[i].size();j++)
+            v[j] = false;
+
+            visited.push_back(v);
+        }
+
+        bool ans = false;
+
+        //now using for loop check for the character where you get word[0]
+        // and from there search in all possible directions to find the remaining letters of the word
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<board[0].size();j++)
+            {
+                if(board[i][j] == word[0])
+                {
+                    ans = ans | solve(i,j,0,board,visited,word);
+                    //match found so call solve function
+                    if(ans)
+                    return ans;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
