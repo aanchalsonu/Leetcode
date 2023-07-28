@@ -26,6 +26,30 @@ Explanation: Only the first two points have an absolute difference of 3 or less 
 
 class Solution {
 public:
+
+
+/*
+
+Create a priority queue p (Max heap) which will store the maximum elements
+
+The priority queue contains a pair of yi-xi and xi 
+yi-xi is stored to find the maximum value of the equation yi+yj+|xi-xj|
+
+the above equation can also be rewritten as (yi - xi) + yj + xj.
+
+Now iterate through the array and find the value of xi-xj for each element in the array
+
+one point is the top of queue and the other point will be the point corresponding to the iterator pointer.
+
+if the value of xi-xj exceeds k then the pair at top of queue cannot be used so pop it.
+
+keep calculating for each point.
+at last find the maximum value of the equation by iterating through the queue and solving for the equation
+(points[i][1] - points[i][0], points[i][0])
+
+Return the max value
+
+*/
     int findMaxValueOfEquation(vector<vector<int>>& points, int k) {
         priority_queue<pair<int,int>>p;
         int ans=INT_MIN;
@@ -48,3 +72,5 @@ public:
         return ans;
     }
 };
+
+
