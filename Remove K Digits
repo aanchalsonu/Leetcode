@@ -1,0 +1,101 @@
+/*
+
+Given string num representing a non-negative integer num, and an integer k, return the smallest possible integer after removing k digits from num.
+
+ 
+
+Example 1:
+
+Input: num = "1432219", k = 3
+Output: "1219"
+Explanation: Remove the three digits 4, 3, and 2 to form the new number 1219 which is the smallest.
+Example 2:
+
+Input: num = "10200", k = 1
+Output: "200"
+Explanation: Remove the leading 1 and the number is 200. Note that the output must not contain leading zeroes.
+Example 3:
+
+Input: num = "10", k = 2
+Output: "0"
+Explanation: Remove all the digits from the number and it is left with nothing which is 0.
+
+*/
+
+class Solution {
+public:
+    string removeKdigits(string num, int k) {
+
+        if(num.length() <= k)
+        return "0";
+
+        if(k==0)
+        return num;
+
+        string res="";
+        stack<char> s;
+
+        s.push(num[0]);
+
+        //now check if the element on top of stack is lesser than the input element
+        //if not then pop the element from stack
+        //ie : if  for 12 in stack the next number is 0 then pop 2 and 1 from stack and insert 0
+
+        for(int i=1;i<num.length();i++)
+        {
+            while(k>0 && !s.empty() && num[i] < s.top())
+            {
+                --k;
+                s.pop();
+            }
+
+            s.push(num[i]);
+
+            //popping precedin zeros
+            if(s.size() == 1 && num[i] == '0')
+            s.pop();
+        } 
+
+        while(k && !s.empty())
+        {
+            //for cases like "456" where every num[i] > s.top()
+            --k;
+            s.pop();
+        }
+
+        while(!s.empty())
+        {
+            res.push_back(s.top());
+            s.pop();
+        }
+
+        reverse(res.begin(),res.end());
+
+        if(res.length() == 0)
+        return "0";
+
+        return res;
+
+
+        //THIS APPROACH GIVES AN ERROR WHERE FOR INPUT 1432219 IT GIVES THE RESULT AS 1122 BUT THE RESULT IS 1219
+
+        
+        // int i;
+        // string res="";
+        // int n = num.length();
+        // vector<int> arr;
+        // for(i=0;i<n;i++)
+        // {
+        //     arr.push_back(num[i]-'0');
+        // }
+
+        // sort(arr.begin(),arr.end());
+        // for(i=0;i<n-k;i++)
+        // {
+        //     res += to_string(arr[i]);
+        // }
+        // if(res == "")
+        // return "0";
+        // return res;
+    }
+};
