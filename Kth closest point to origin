@@ -33,6 +33,15 @@ public:
         int i,n;
         //using vector pairs
 
+        //THE LOGIC HERE IS THAT INSTEAD OF CALCULATING THE WHOLE SQUARE ROOT EQUATION WE CAN JUST FIND X^2+Y^2 AND SORT THE VALUES BASED ON THIS.
+        //ON SORTING AN ARRAY BASED ON THE VALUE OF X^2 + Y^2 WE GET THE CLOSEST POINTS AT THE STARTING INDEX AND 
+        //HENCE CAN BE PUT INTO RESULTANT ARRAY AND RETURN IT
+
+
+        //THE PAIR STORES 3 VALUES
+        //1.X^2+Y^2
+        //2. X VALUE
+        //3. Y VALUE
         vector<pair<int,pair<int,int>>> v;
         for(auto x : points)
         {
@@ -47,13 +56,6 @@ public:
             res.push_back({v[i].second.first,v[i].second.second});
         }
         return res;
-
-
-
-
-
-
-
 
 
         // n = points[0].size();
