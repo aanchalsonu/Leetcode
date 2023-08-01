@@ -10,6 +10,8 @@ We calculte the hash value for string text and pattern whenever the hasvalues ma
 If the hash values doesnt match for this particular window , slide the window by one position then calculate the hash value again and repeate 
 the process.
 
+Best case time complexity is O(m+n)
+and worst case time complexity is O(mn)
 */
 
 
