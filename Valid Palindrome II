@@ -1,0 +1,54 @@
+/*
+
+Given a string s, return true if the s can be palindrome after deleting at most one character from it.
+
+ 
+
+Example 1:
+
+Input: s = "aba"
+Output: true
+Example 2:
+
+Input: s = "abca"
+Output: true
+Explanation: You could delete the character 'c'.
+Example 3:
+
+Input: s = "abc"
+Output: false
+
+*/
+
+class Solution {
+public:
+    bool is_remaining_palidrome(int l, int r, string s){
+        while (r > l){
+            if(s[l] == s[r]){
+                l++;
+                r--;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //HERE FIRST CHECK FROM LEFT AND RIGHT , IF THE MISMATCH IS FOUND THEN CALL 
+    //ISPALINDROM FUNCTION FOR 2 CASES IE: ONE WITH LEFT +1 AND THE OTHER WITH RIGHT-1.
+    // IF IT RETURNS TRUE THEN THE STRING SI PALINDROM AFTER REMOVING ONE CHARACTER
+
+    bool validPalindrome(string s) {
+        int l = 0; 
+        int r = s.length() - 1;
+        while(r > l){
+            if(s[l] == s[r]){
+                l++;
+                r--;
+            } else {
+                return is_remaining_palidrome(l + 1, r, s) || is_remaining_palidrome(l, r - 1, s);
+            }
+        }
+        return true;
+    }
+};
