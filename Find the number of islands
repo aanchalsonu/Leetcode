@@ -1,0 +1,112 @@
+/*
+
+Given a grid of size n*m (n is the number of rows and m is the number of columns in the grid) consisting of '0's (Water) and '1's(Land). Find the number of islands.
+
+Note: An island is either surrounded by water or boundary of grid and is formed by connecting adjacent
+lands horizontally or vertically or diagonally i.e., in all 8 directions.
+
+Example 1:
+
+Input:
+grid = {{0,1},{1,0},{1,1},{1,0}}
+Output:
+1
+Explanation:
+The grid is-
+0 1
+1 0
+1 1
+1 0
+All lands are connected.
+Example 2:
+
+Input:
+grid = {{0,1,1,1,0,0,0},{0,0,1,1,0,1,0}}
+Output:
+2
+Expanation:
+The grid is-
+0 1 1 1 0 0 0
+0 0 1 1 0 1 0 
+There are two islands :- one is colored in blue 
+
+THE LOGIC IS TO DO DFS TRAVERSAL AND FIND THE GROUPS OF 1'S 
+THE NUMBER OF TRAVERSALS WILL BE THE NUMBER OF ISLANDS
+WHILE DOING DFS MARK THE VISITED NODES TO 0 SO THAT THERE IS NO NEED TO CREATE A NEW VISITED ARRAY
+
+*/
+
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+  public:
+    // Function to find the number of islands.
+    
+    void dfs(vector<vector<char>>& grid, int i,int j, int row, int col)
+    {
+        if(i<0 || i>(row-1) || j<0 || j> (col-1) || grid[i][j] != '1')
+        return;
+        
+        if(grid[i][j] == '1')
+        {
+            grid[i][j] ='0';
+            dfs(grid,i+1,j,row,col);
+            dfs(grid,i-1,j,row,col);
+            dfs(grid,i,j+1,row,col);
+            dfs(grid,i,j-1,row,col);
+            dfs(grid,i+1,j+1,row,col);
+            dfs(grid,i-1,j-1,row,col);
+            dfs(grid,i-1,j+1,row,col);
+            dfs(grid,i+1,j-1,row,col);
+        }
+    }
+    
+    
+    int numIslands(vector<vector<char>>& grid) {
+        // Code here
+        int row = grid.size();
+        int col = grid[0].size();
+        
+        int count=0;
+        int i,j;
+        
+        for(i=0;i<row;i++)
+        {
+            for(j=0;j<col;j++)
+            {
+                if(grid[i][j] == '1')
+                {
+                    count++;
+                    dfs(grid,i,j,row,col);
+                }
+            }
+        }
+        return count;
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        int n, m;
+        cin >> n >> m;
+        vector<vector<char>> grid(n, vector<char>(m, '#'));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                cin >> grid[i][j];
+            }
+        }
+        Solution obj;
+        int ans = obj.numIslands(grid);
+        cout << ans << '\n';
+    }
+    return 0;
+}
+// } Driver Code Ends
+and other in orange.
