@@ -1,0 +1,57 @@
+/*
+Given the coordinates of four points in 2D space p1, p2, p3 and p4, return true if the four points construct a square.
+
+The coordinate of a point pi is represented as [xi, yi]. The input is not given in any order.
+
+A valid square has four equal sides with positive length and four equal angles (90-degree angles).
+
+ 
+
+Example 1:
+
+Input: p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,1]
+Output: true
+Example 2:
+
+Input: p1 = [0,0], p2 = [1,1], p3 = [1,0], p4 = [0,12]
+Output: false
+Example 3:
+
+Input: p1 = [1,0], p2 = [-1,0], p3 = [0,1], p4 = [0,-1]
+Output: true
+
+*/
+
+class Solution {
+public:
+
+    /*
+        THE LOGIC IS :
+        FIND THE DISTANCE BETWEEN EACH PAIR ANS STORE THE RESULT IN A SET.
+        IF THE SET CONTAINS 0 , THEN THERE ARE TWO IDENTICAL POINTS AND HENCE SQUARE IS NOT POSSIBLE.
+        THE SET MUST CONTAIN 2 DIFFERENT VALUES , ONE FOR THE SIDES 
+        AND THE OTHER FOR DAIGONAL. 
+        HENCE THE SIZE OF THE SET MUST BE 2 
+        IF THE ABOVE 2 CONSITIONS SATISFY THEN RETURN TRUE
+    
+
+    */
+
+    bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
+        set<int> s;
+        int a = (pow((p1[0]-p2[0]),2)+ pow((p1[1]-p2[1]),2));
+        int b = (pow((p1[0]-p3[0]),2)+ pow((p1[1]-p3[1]),2));
+        int c = (pow((p1[0]-p4[0]),2)+ pow((p1[1]-p4[1]),2));
+        int d = (pow((p2[0]-p3[0]),2)+ pow((p2[1]-p3[1]),2));
+        int e = (pow((p2[0]-p4[0]),2)+ pow((p2[1]-p4[1]),2));
+        int f = (pow((p3[0]-p4[0]),2)+ pow((p3[1]-p4[1]),2));
+        s.insert(a);
+        s.insert(b);
+        s.insert(c);
+        s.insert(d);
+        s.insert(e);
+        s.insert(f);
+        return ( !s.count(0) && s.size()==2);
+
+    }
+};
