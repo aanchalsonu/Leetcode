@@ -1,0 +1,105 @@
+/*
+Given the mobile numeric keypad. You can only press buttons that are up, left, right, or down to the current 
+button or the current button itself (like 00,11, etc.). You are not allowed to press the bottom row corner 
+buttons (i.e. * and # ). Given a number N, the task is to find out the number of possible numbers of the given length.
+
+Example 1:
+
+Input: 1
+Output: 10
+Explanation: Number of possible numbers 
+would be 10 (0, 1, 2, 3, ., 9)  
+
+
+Example 2:
+Input: N = 2
+Output: 36
+Explanation: Possible numbers: 00, 08, 11,
+12, 14, 22, 21, 23, 25 and so on.
+If we start with 0, valid numbers 
+will be 00, 08 (count: 2)
+If we start with 1, valid numbers 
+will be 11, 12, 14 (count: 3)
+If we start with 2, valid numbers 
+will be 22, 21, 23,25 (count: 4)
+If we start with 3, valid numbers 
+will be 33, 32, 36 (count: 3)
+If we start with 4, valid numbers 
+will be 44,41,45,47 (count: 4)
+If we start with 5, valid numbers 
+will be 55,54,52,56,58 (count: 5) 
+and so on..
+
+*/
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution{
+
+
+	long long dp[4][3][26];
+    public:
+    Solution(){
+        memset(dp, -1, sizeof(dp));
+    }
+    long long solve(int i, int j, vector<vector<int>> &nums, int N){
+
+        if (i<0 || j<0 || i>3 || j>2 || nums[i][j]==-1 ) return 0;
+        if (N==1) return 1;
+        
+        if(dp[i][j][N]!=-1) return dp[i][j][N];
+        
+        long long same = solve(i,j,nums,N-1);
+        long long up = solve(i-1,j,nums,N-1);
+        long long left = solve(i,j-1,nums,N-1);
+        long long right = solve(i,j+1,nums,N-1);
+        long long down = solve(i+1,j,nums,N-1);
+        
+        return dp[i][j][N]=same+up+left+right+down;
+    }
+    
+    long long getCount(int N){
+
+        vector<vector<int>> nums 
+        {{1,2,3},
+        {4,5,6},
+        {7,8,9},
+        {-1,0,-1}};      
+
+        long long ans=0;
+
+        for(int i=0; i<4; ++i){
+            for(int j=0; j<3; ++j){
+                ans+= solve(i,j,nums,N);
+            }
+        }
+        return ans;
+    }
+
+};
+
+//{ Driver Code Starts.
+int main() 
+{
+   	
+   
+   	int t;
+    cin >> t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+
+       
+
+	    Solution ob;
+	    cout << ob.getCount(n) << "\n";
+	     
+    }
+    return 0;
+}
+
+// } Driver Code Ends
