@@ -1,0 +1,98 @@
+/*
+
+Given an integer array coins[ ] of size N representing different denominations of currency and an integer sum, 
+find the number of ways you can make sum by using different combinations from coins[ ].  
+Note: Assume that you have an infinite supply of each type of coin. And you can use any coin as many times as you want.
+
+Example 1:
+
+Input:
+N = 3, sum = 4
+coins = {1,2,3}
+Output: 4
+Explanation: Four Possible ways are: {1,1,1,1},{1,1,2},{2,2},{1,3}.
+Example 2:
+
+Input:
+N = 4, Sum = 10
+coins = {2,5,3,6}
+Output: 5
+Explanation: Five Possible ways are: {2,2,2,2,2}, {2,2,3,3}, {2,2,6}, {2,3,5} and {5,5}.
+
+*/
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+  public:
+  
+    // long long int solve(int coins[], int n, int sum,vector<vector<int>> &dp)
+    // {
+    //     if (sum == 0)
+    //     return dp[n][sum] = 1;
+ 
+    // // If number of coins is 0 or sum is less than 0 then
+    // // there is no way to make the sum.
+    // if (n == 0 || sum < 0)
+    //     return 0;
+ 
+    // // If the subproblem is previously calculated then
+    // // simply return the result
+    // if (dp[n][sum] != -1)
+    //     return dp[n][sum];
+ 
+    // // Two options for the current coin
+    // return dp[n][sum]
+    //       = solve(coins, n, sum - coins[n - 1], dp)
+    //          + solve(coins, n - 1, sum, dp);
+    // }
+    
+  
+    long long int count(int coins[], int N, int sum) {
+
+        // // code here.
+        // vector<vector<int>> dp(N+1,vector<int> (sum+1,-1));
+        // return solve(coins,N,sum,dp);
+        
+        
+        vector<long long>dp(sum+1,0);
+
+        dp[0]=1;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=coins[i];j<=sum;j++)
+            {
+                dp[j]+=dp[j-coins[i]];
+            }
+            
+        }
+        return dp[sum];
+
+        dp[j] += dp[j - coins[i]];: This line updates the number of ways to make the sum j by adding the number of ways to make the sum j - coins[i] 
+        using the current coin denomination coins[i]. This step ensures that we accumulate the ways to make the current sum j using different
+        combinations of the available coin denominations.
+
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int sum, N;
+        cin >> sum >> N;
+        int coins[N];
+        for (int i = 0; i < N; i++) cin >> coins[i];
+        Solution ob;
+        cout << ob.count(coins, N, sum) << endl;
+    }
+
+    return 0;
+}
+
+
+// } Driver Code Ends
