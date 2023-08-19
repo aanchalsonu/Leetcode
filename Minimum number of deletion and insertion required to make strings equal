@@ -1,0 +1,107 @@
+Given two strings str1 and str2. The task is to remove or insert the minimum number of characters
+
+from/in str1 so as to transform it into str2. It could be possible that the same character needs to be 
+removed/deleted from one point of str1 and inserted to some another point.
+
+Example 1:
+
+Input: str1 = "heap", str2 = "pea"
+Output: 3
+Explanation: 2 deletions and 1 insertion
+p and h deleted from heap. Then, p is 
+inserted at the beginning One thing to 
+note, though p was required yet it was 
+removed/deleted first from its position 
+and then it is inserted to some other 
+position. Thus, p contributes one to the 
+deletion_count and one to the 
+insertion_count.
+Example 2:
+
+Input : str1 = "geeksforgeeks"
+str2 = "geeks"
+Output: 8
+Explanation: 8 deletions
+
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution{
+		
+		
+		//apply longest common subsequence problem and then just do insert = str1.size - lcs and deletion =
+		// str2.size - lcs
+
+	public:
+	int dp[1001][1001];
+	
+	
+	int longestCommonSubsequence(int i,int j, string &s1, string & s2)
+	{
+	    if(i == 0 || j ==0)
+	    return 0;
+	    
+	    if(dp[i][j] != -1)
+	    return dp[i][j];
+	    
+	    if(s1[i-1] == s2[j-1])
+	    {
+	        dp[i][j] = 1 + longestCommonSubsequence(i-1,j-1,s1,s2);
+	    }
+	    else
+	    {
+	        dp[i][j] = max(longestCommonSubsequence(i-1,j,s1,s2), 
+	                        longestCommonSubsequence(i,j-1,s1,s2));
+	    }
+	    return dp[i][j];
+	    
+	}
+	
+	
+	int minOperations(string str1, string str2) 
+	{ 
+	    // Your code goes here
+	   // memset(dp,-1,sizeof(dp));
+	   int n = str1.size();
+	   int m = str2.size();
+	   
+	   for(int i=0;i<1001;i++)
+	   {
+	       for(int j=0;j<1001;j++)
+	       {
+	           dp[i][j] = -1;
+	       }
+	   }
+	    int lcs = longestCommonSubsequence(n,m,str1,str2);
+	    
+	    int insert = str1.size()-lcs;
+	    int del = str2.size()-lcs;
+	    return insert+del;
+	    
+	} 
+};
+
+//{ Driver Code Starts.
+int main() 
+{
+   	
+   
+   	int t;
+    cin >> t;
+    while (t--)
+    {
+        string s1, s2;
+        cin >> s1 >> s2;
+
+	    Solution ob;
+	    cout << ob.minOperations(s1, s2) << "\n";
+	     
+    }
+    return 0;
+}
+
+
+// } Driver Code Ends
