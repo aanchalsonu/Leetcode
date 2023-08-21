@@ -1,0 +1,44 @@
+We are given an array ‘ARR’ with N positive integers and an integer K. We need to find the number of subsets whose sum is equal to K.
+
+Example:
+
+
+Disclaimer: Don’t jump directly to the solution, try it out yourself first.
+
+Solution :
+A Greedy Solution doesn’t make sense because we are not looking to optimize anything. We can rather
+try to generate all subsequences using recursion and whenever we get a single subsequence whose sum is equal to the given target, we can count it.
+
+Note: Readers are highly advised to watch this video “Recursion on Subsequences” to understand how we generate subsequences using recursion.
+
+
+
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int findWaysUtil(int ind, int target, vector<int>& arr, vector<vector<int>> &dp){
+    if(target==0)
+        return 1;
+    
+    if(ind == 0)
+        return arr[0] == target;
+    
+    if(dp[ind][target]!=-1)
+        return dp[ind][target];
+        
+    int notTaken = findWaysUtil(ind-1,target,arr,dp);
+    
+    int taken = 0;
+    if(arr[ind]<=target)
+        taken = findWaysUtil(ind-1,target-arr[ind],arr,dp);
+        
+    return dp[ind][target]= notTaken + taken;
+}
+
+int findWays(vector<int> &num, int k){
+    int n = num.size();
+    vector<vector<int>> dp(n,vector<int>(k+1,-1));
+    return findWaysUtil(n-1,k,num,dp);
+}
