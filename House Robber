@@ -22,73 +22,44 @@ Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (m
 Total amount you can rob = 2 + 9 + 1 = 12.
 
 */
+#include <bits/stdc++.h>
 
-class Solution {
-public:
+using namespace std;
+vector<int> dp(n+1,-1)
+long long int solve(int i,vector<int>& arr){
+    if(i == 0) return arr[i];
+    if(i < 0) return 0;
+    if(dp[i] != -1)
+    return dp[i];
+ 
+    int pick = arr[i]+ solve(i-2,arr);
+    int nopick = 0 + solve(i-1,arr);
+    return max(pick,nopick);
+}
 
-    // int solve(int i,vector<int>& nums,int &ans,vector<int> &dp)
-    // {
-        
-        // if(i> nums.size())
-        // return 0;
-
-        // if(dp[i] != -1)
-        // return dp[i];
-
-        // ans += max(solve(i,nums,ans,dp), solve(i+2,nums,ans,dp));
-        // return dp[i] = ans;
-
-
-
-        // if(ei>nums.size() || oi>nums.size())
-        // return 0;
-
-        // if(dp[ei] != -1)
-        // return dp[ei];
-
-        // if(dp[oi] != -1)
-        // return dp[oi];
-
-        // int e=0,o=0;
-        // e += solve(ei+2,oi,nums,ans,dp);
-        // o += solve(ei,oi+2,nums,ans,dp);
-
-        // dp[ei] = e;
-        // dp[oi] = o;
-
-        // ans += max(e,o);
-        // return ans;
-
-    // }
-
-
-    int rob(vector<int>& nums) {
-        int n = nums.size();
-        vector<int> dp(n,-1);
-
-        //Tabulation method
-        // Basic Cases
-
-        if(n==0)
-        return 0;
-
-        if(n==1)
-        return nums[0];
-
-        if(n==2)
-        return max(nums[0],nums[1]);
+long long int robStreet(int n, vector<int> &arr){
+    vector<int> arr1;
+    vector<int> arr2;
     
-
-        //Fill the dp
-        dp[0] = nums[0];
-        dp[1] = max(nums[0],nums[1]);
-
-        //now check wheather to go with even indexes or odd indexes
-        for(int i=2;i<n;i++)
-        {
-            //if current value of nums plus the previous even or odd index is max then we'll  go with even indices or we'll  go with odd
-            dp[i] = max(nums[i] + dp[i-2] , dp[i-1]);
-        }
-        return dp[n-1];
+    if(n==1)
+       return arr[0];
+    
+    for(int i=0; i<n; i++){
+        
+        if(i!=0) arr1.push_back(arr[i]);
+        if(i!=n-1) arr2.push_back(arr[i]);
     }
-};
+    
+    long long int ans1 = solve(arr1.size(),arr1);
+    long long int ans2 = solve(arr2.size(),arr2);
+    
+    return max(ans1,ans2);
+}
+
+
+int main() {
+
+  vector<int> arr{1,5,1,2,6};
+  int n=arr.size();
+  cout<<robStreet(n,arr);
+}
