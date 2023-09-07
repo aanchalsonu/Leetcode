@@ -1,0 +1,40 @@
+/******************************************************************************
+
+Armstrong Number
+
+*******************************************************************************/
+#include <iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int n;
+    cin>>n;
+    
+    int count=0;
+    int temp = n, orig = n;
+    int num=0;
+    
+    while(temp !=  0)
+    {
+        count++;
+        temp /= 10;
+    }
+    
+    while(n != 0)
+    {
+        int digit = n%10;
+        num +=  pow(digit,count);
+        n = n/10;
+    }
+    
+    if(orig == num)
+    cout<<"YES IT IS \n";
+    else
+    cout<<"NO IT IS NOT \n";
+    
+    
+    return 0;
+}
