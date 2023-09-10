@@ -1,0 +1,83 @@
+Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to
+right, then right to left for the next level and alternate between).
+
+ 
+
+Example 1:
+
+
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[20,9],[15,7]]
+Example 2:
+
+Input: root = [1]
+Output: [[1]]
+Example 3:
+
+Input: root = []
+Output: []
+ 
+
+Constraints:
+
+The number of nodes in the tree is in the range [0, 2000].
+-100 <= Node.val <= 100
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+
+        if (root == nullptr) {
+            return res; // Handle the case when root is nullptr
+        }
+
+        queue<TreeNode*> q;
+        queue<TreeNode*> q1;
+        q.push(root);
+
+        bool leftToRight = true; // Use a flag to determine the direction
+
+        while (!q.empty()) {
+            int n = q.size();
+            vector<int> v;
+            stack<TreeNode*> s;
+
+            for (int i = 0; i < n; i++) {
+                TreeNode* t = q.front();
+                q.pop();
+
+                if (leftToRight) {
+                    v.push_back(t->val);
+                } else {
+                    s.push(t);
+                }
+
+                if (t->left) {
+                    q1.push(t->left);
+                }
+                if (t->right) {
+                    q1.push(t->right);
+                }
+            }
+
+            while (!s.empty()) {
+                v.push_back(s.top()->val);
+                s.pop();
+            }
+
+            res.push_back(v);
+            leftToRight = !leftToRight;
+            swap(q, q1);
+        }
+
+        return res;
+    }
+};
