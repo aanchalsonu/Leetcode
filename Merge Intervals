@@ -41,7 +41,32 @@ public:
         return ans;
 
 
+      APPROACH 2
+       vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        // Sort the intervals based on the start value
+        sort(intervals.begin(), intervals.end());
 
+        vector<vector<int>> res;
+        res.push_back(intervals[0]);
+
+        int n = intervals.size();
+
+        for (int i = 1; i < n; i++) {
+            int currentStart = intervals[i][0];
+            int currentEnd = intervals[i][1];
+            int lastEnd = res.back()[1];
+
+            if (currentStart <= lastEnd) {
+                // Merge the intervals
+                res.back()[1] = max(lastEnd, currentEnd);
+            } else {
+                // Add the non-overlapping interval to the result
+                res.push_back(intervals[i]);
+            }
+        }
+
+        return res;
+    }
 
 
 
