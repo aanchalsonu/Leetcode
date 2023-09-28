@@ -1,0 +1,92 @@
+Problem Statement
+
+
+
+Detailed explanation ( Input/output format, Notes, Images )
+Sample Input 1:
+4
+1 2 3 2
+Sample Output 1:
+2 4
+Explanation Of Sample Input 1:
+Input: ‘N’ = 5
+‘A’ = [1, 2, 3, 2]
+
+Output: {2, 4}
+
+Explanation: The integer appearing twice is ‘2’, and the integer missing is ‘4’.
+Sample Input 2:
+3
+1 2 1
+Sample Output 2:
+1 3
+Constraints:
+2 <= N <= 10^4
+1 <= A[i] <= N
+
+Time Limit: 1-sec
+
+
+
+#include<bits/stdc++.h>
+vector<int> findMissingRepeatingNumbers(vector < int > a) {
+    // Write your code here
+
+    int n = a.size();
+
+    int hash[n+1]= {0};
+
+    for(int i=0;i<n;i++)
+    {
+        hash[a[i]]++;
+    }
+
+    int rep=-1,mis=-1;
+
+    for(int i=1;i<=n;i++)
+    {
+        if(hash[i]==2)
+        rep=i;
+        else if(hash[i] == 0)
+        mis = i;
+
+    }
+
+    return {rep,mis};
+
+
+
+
+
+
+
+
+    // unordered_map<int,int> mp;
+    // set<int> s;
+    // for(int i=0;i<n;i++)
+    // {
+    //     mp[a[i]]++;
+    //     s.insert(a[i]);
+    // }
+
+    // int rep= 0;
+    // for(auto i : mp)
+    // {
+    //     if (i.second > 1) {
+    //       rep = i.first;
+    //       break;
+    //     }
+    // }
+    // int sum=0;
+    // int missing=0,count=0;
+    // for(int i=1;i<=n;i++)
+    // {
+    //     count += i;
+    // }
+    // for(auto i : s)
+    // {
+    //     sum += i;
+    // }
+
+    // return {rep,count-sum};
+}
