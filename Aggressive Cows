@@ -1,0 +1,81 @@
+Problem Statement: You are given an array ‘arr’ of size ‘n’ which denotes the position of stalls.
+You are also given an integer ‘k’ which denotes the number of aggressive cows.
+You are given the task of assigning stalls to ‘k’ cows such that the minimum distance between any two of them is the maximum possible.
+Find the maximum possible minimum distance.
+
+
+We are going to use the Binary Search algorithm to optimize the approach.
+
+The primary objective of the Binary Search algorithm is to efficiently determine the appropriate half to eliminate,
+thereby reducing the search space by half. It does this by determining a specific condition that ensures that the target is not present in that half.
+
+Upon closer observation, we can recognize that our answer space, represented as [1, (max(stalls[])-min(stalls[]))], 
+is actually sorted. Additionally, we can identify a pattern that allows us to divide this space into two halves: one consisting 
+of potential answers and the other of non-viable options. So, we will apply binary search on the answer space.
+
+For example, the given array is {1, 2, 8, 4, 9}. The possible distances are the following:
+
+
+Algorithm:
+First, we will sort the given stalls[] array.
+Place the 2 pointers i.e. low and high: Initially, we will place the pointers. The pointer low will point to 1 and the high 
+will point to (stalls[n-1]-stalls[0]). As the ‘stalls[]’ is sorted, ‘stalls[n-1]’ refers to the maximum, and ‘stalls[0]’ is the minimum element.
+Calculate the ‘mid’: Now, inside the loop, we will calculate the value of ‘mid’ using the following formula:
+mid = (low+high) // 2 ( ‘//’ refers to integer division)
+Eliminate the halves based on the boolean value returned by canWePlace():
+We will pass the potential distance, represented by the variable ‘mid’, to the ‘canWePlace()‘ function. This function will
+return true if it is possible to place all the cows with a minimum distance of ‘mid’.
+If the returned value is true: On satisfying this condition, we can conclude that the number ‘mid’ is one of our possible answers. 
+But we want the maximum number. So, we will eliminate the left half and consider the right half(i.e. low = mid+1).
+Otherwise, the value mid is greater than the distance we want. This means the numbers greater than ‘mid’ should not be considered
+and the right half of ‘mid’ consists of such numbers. So, we will eliminate the right half and consider the left half(i.e. high = mid-1).
+Finally, outside the loop, we will return the value of high as the pointer will be pointing to the answer.
+The steps from 3-4 will be inside a loop and the loop will continue until low crosses high.
+
+
+
+
+bool ispossible(vector<int> &stalls, int k,int mid)
+{
+    int count=1,sum=0,i,lastposition;
+    lastposition = stalls[0];
+    for(i=0;i<stalls.size();i++)
+    {
+        if(stalls[i] - lastposition >= mid)
+        {
+            count++;
+            if(count == k)
+            return true;
+            lastposition= stalls[i];
+        }
+    }
+    return false;
+}
+
+int aggressiveCows(vector<int> &stalls, int k)
+{
+    int s,i,e,sum=0,ans=0,maxi=0,mid=0;
+    sort(stalls.begin(),stalls.end());
+    for(i=0;i<stalls.size();i++)
+    {
+        maxi = max(maxi,stalls[i]);
+    }
+    s=0;
+    e = maxi;
+    mid = s +(e-s)/2;
+    while(s<=e)
+    {
+        if(ispossible(stalls,k,mid))
+        {
+            ans = mid;
+            s = mid+1;
+           
+        }
+        else{
+             e = mid-1;
+        }
+        mid = s +(e-s)/2;
+    }
+    return ans;
+}
+
