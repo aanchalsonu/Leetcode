@@ -1,0 +1,180 @@
+Problem Statement
+
+
+
+Detailed explanation ( Input/output format, Notes, Images )
+Sample Input 1:
+3
+1 5 2
+
+
+Sample Output 1:
+1 5 3
+
+
+Explanation For Sample Input 1:
+Initially the number is 152. After incrementing it by 1, the number becomes 153.
+
+
+Sample Input 2:
+2
+9 9
+
+
+Sample Output 2:
+1 0 0
+
+
+Explanation For Sample Input 2:
+Initially the number is 9. After incrementing it by 1, the number becomes 100. Please note that there were 2 nodes
+in the initial linked list, but there are three nodes in the sum linked list.
+
+
+Expected Time Complexity :
+The expected time complexity is O('n').
+
+
+Constraints:
+1 <= 'n' <=  10^5
+0 <= Node in linked list <= 9
+
+There are no leading zeroes in the number.
+
+Time Limit: 1 sec
+
+
+
+/**
+ * Definition of linked list:
+ *
+ * class Node {
+ * public:
+ *      int data;
+ *      Node *next;
+ *      Node() {
+ *          this->data = 0;
+ *          this->next = NULL;
+ *      }
+ *      Node(int data) {
+ *          this->data = data;
+ *          this->next = NULL;
+ *      }
+ *      Node (int data, Node *next) {
+ *          this->data = data;
+ *          this->next = next;
+ *      }
+ * };
+ *
+ *************************************************************************/
+
+
+Node * reverse(Node * head)
+    {
+        Node * curr = head;
+        Node * prev=NULL;
+        while(curr != NULL)
+        {
+            Node * fwrd = curr->next;
+            curr->next= prev;
+            prev =curr;
+            curr = fwrd;
+        }
+
+        return prev;
+    }
+
+
+// Node *addOne(Node *head)
+// {
+//     // Write Your Code Here.
+//     Node * curr = head;
+//     long int num=0;
+//     while(curr)
+//     {
+//         num = (num*10)+curr->data;
+//         curr = curr->next;
+//     }
+
+//     num += 1;
+//     long int newNum = num;
+
+//     Node * newNode  = new Node(newNum%10);
+//     newNum /= 10;
+//     Node * res = newNode->next;
+//     Node * tail = newNode;
+
+//     while(newNum > 0)
+//     {
+//         int r = newNum%10;
+//         Node * temp = new Node(r);
+//         tail->next = temp;
+//         tail = temp;
+//         newNum /= 10;
+//     }
+
+//     return reverseIt(newNode);
+
+
+// }
+
+Node *addOne(Node *head) {
+
+ 
+
+  // Reverse the linked list ,so that we can traverse backwards(to simulate
+
+  // addition).
+
+  head = reverse(head);
+
+  Node *curr = head;
+
+  while (curr) {
+
+ 
+
+    if (curr->data != 9) {
+
+      // If the current digit is not 9, simply increment it by 1 and break out
+
+      // of the loop.
+
+      curr->data++;
+
+      break;
+
+    }
+
+    if (curr->next == NULL) {
+
+      // EDGE CASE: if most significant digit is 9
+
+      // If the current digit is 9 and we have reached the end of the list,
+
+      // create a new node with a value of 1 ,append it to the current node
+
+      // and set the data of current Node to 0
+
+      Node *newNode = new Node(1);
+
+      curr->data = 0;
+
+      curr->next = newNode;
+
+      break;
+
+    }
+
+    // else if current digit is 9, set it to 0 and continue
+
+    curr->data = 0;
+
+    curr = curr->next;
+
+  }
+
+  head = reverse(head);
+
+  return head;
+
+}
