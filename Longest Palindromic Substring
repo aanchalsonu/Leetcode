@@ -1,0 +1,84 @@
+Given a string s, return the longest 
+palindromic
+ 
+substring
+ in s.
+
+ 
+
+Example 1:
+
+Input: s = "babad"
+Output: "bab"
+Explanation: "aba" is also a valid answer.
+Example 2:
+
+Input: s = "cbbd"
+Output: "bb"
+ 
+
+Constraints:
+
+1 <= s.length <= 1000
+s consist of only digits and English letters.
+
+
+
+
+
+class Solution {
+public:
+    string printString(string s , int start, int end)
+  {
+      string t ="";
+      for(int i=start;i<=end;i++)
+      {
+          t =  t + s[i];
+      }
+      return t;
+  }
+    string longestPalindrome(string S) {
+         
+        int l,h;
+        int start=0,end=1;
+        
+        for(int i=1;i<S.length();i++)
+        {
+            
+            // For strings with even length
+            l = i-1;
+            h = i;
+            
+            //phela current character sa check kare, compare with the next character agar same hai tho phir loop ka andar aayega aur check hoga ke yeh length greater hai previous substring ke length sa , agar hai tho start aur end update hoga to l and h-l+1 aue low decrement hoga aur high incre,=ment to find the next pair
+            while(l>=0 && h<=S.length() && S[l] == S[h])
+            {
+                if(h-l+1>end)
+                {
+                    start = l;
+                    end = h-l+1;
+                }
+                l--;
+                h++;
+            }
+            
+            //Odd length
+            
+            l = i-1;
+            h = i+1;
+            
+            while(l>=0 && h<=S.length() && S[l] == S[h])
+            {
+                if(h-l+1>end)
+                {
+                    start = l;
+                    end = h-l+1;
+                }
+                l--;
+                h++;
+            }
+            
+        }
+        string res = printString(S,start,start+end-1);
+        return res;
+    }
+};
