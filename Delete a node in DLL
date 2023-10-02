@@ -1,0 +1,76 @@
+Problem Statement
+
+
+
+Detailed explanation ( Input/output format, Notes, Images )
+Sample Input 1:
+5
+4 10 3 5 20
+
+
+Sample Output 1:
+4 10 3 5 NULL
+
+
+Explanation Of Sample Input 1 :
+The last node having ‘data’ = 20 is removed from the linked list.
+
+
+Sample Input 2 :
+1
+5
+
+
+Sample Output 2 :
+NULL
+
+
+Explanation Of Sample Input 2 :
+The linked list has only one node, so the modified linked list is empty.
+
+
+Expected Time Complexity :
+The expected time complexity is O(N).
+
+
+Constraints:
+1 <= ‘N’ <= 100000
+1 <= Data of a node in linked list <= 10^9
+
+Time limit: 1 second
+
+
+/**
+ * Definition of doubly linked list:
+ *
+ * struct Node {
+ *      int data;
+ *      Node *prev;
+ *      Node *next;
+ *      Node() : data(0), prev(nullptr), next(nullptr) {}
+ *      Node(int val) : data(val), prev(nullptr), next(nullptr) {}
+ *      Node(int val, Node *p, Node *n) : data(val), prev(p), next(n) {}
+ * };
+ *
+ *************************************************************************/
+
+Node * deleteLastNode(Node *head) {
+    // Write your code here
+    Node* curr = head;
+    Node * prev = NULL;
+
+    if(head->next == NULL)
+    return NULL;
+
+    while(curr->next != NULL)
+    {
+        prev = curr;
+        curr = curr->next;
+    }
+
+    prev->next = NULL;
+    delete(curr);
+    return head;
+
+
+}
