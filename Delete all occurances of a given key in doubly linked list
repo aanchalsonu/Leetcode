@@ -1,0 +1,130 @@
+Problem Statement
+
+
+
+
+Detailed explanation ( Input/output format, Notes, Images )
+Sample Input 1:
+7
+10 4 10 3 5 20 10
+10
+
+
+Sample Output 1:
+4 3 5 20
+
+
+Explanation Of Sample Input 1:
+All the nodes having ‘data’ = 10 are removed from the linked list.
+
+
+Sample Input 2:
+7
+10 4 10 3 5 20 10
+30
+
+
+Sample Output 2:
+10 4 10 3 5 20 10
+
+
+Explanation Of Sample Input 2:
+The linked list does not have any node with ‘data’ = 30. So the linked list is unchanged.
+
+
+Expected Time Complexity:
+The expected time complexity is O(‘n’).
+
+
+Constraints:
+0 <= ‘n’ <= 100000
+1 <= ‘data’ in any node <= 10^9
+1 <= ‘k’ <= 10^9
+
+
+
+
+
+
+/**
+ * Definition of doubly linked list:
+ *
+ * class Node {
+ * public:
+ *      int data;
+ *      Node *prev;
+ *      Node *next;
+ *      Node() {
+ *          this->data = 0;
+ *          this->prev = NULL;
+ *          this->next = NULL;
+ *      }
+ *      Node(int data) {
+ *          this->data = data;
+ *          this->prev = NULL;
+ *          this->next = NULL;
+ *      }
+ *      Node (int data, Node *next, Node *prev) {
+ *          this->data = data;
+ *          this->prev = prev;
+ *          this->next = next;
+ *      }
+ * };
+ *
+ *************************************************************************/
+
+Node * deleteAllOccurrences(Node* head, int k) {
+    // Write your code here
+
+    // Node * curr;
+    // if(head->data != k)
+    // curr = head;
+    // else if(head->next->data != k)
+    // curr = head->next;
+
+    // Node * ans = curr;
+
+    // Node * tail = curr;
+
+    // while(!curr)
+    // {
+    //     if(curr->data != k)
+    //     {
+    //         Node * newNode = new Node(curr->data);
+    //         tail->next = newNode;
+    //         tail = newNode;
+    //     }
+    //     curr = curr->next;
+    // }
+
+    vector<int> v;
+
+    Node * curr = head;
+    while(curr != NULL)
+    {
+        if(curr->data != k)
+        {
+            v.push_back(curr->data);
+        }
+        curr = curr->next;
+    }
+
+    Node * res = new Node(-1);
+    Node * ans = res;
+    Node * tail = res;
+
+    for (int i = 0; i < v.size(); i++) {
+        Node *newNode = new Node(v[i]);
+        tail->next = newNode;
+        tail = newNode;
+    }
+    return ans->next;
+
+
+
+
+
+
+
+
+}
