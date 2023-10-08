@@ -1,0 +1,167 @@
+MProblem Statement
+
+
+
+Detailed explanation ( Input/output format, Notes, Images )
+
+
+Sample input 1:
+5
+1 2 3 4 9
+5
+
+
+Sample output 1
+2
+1 4
+2 3
+
+
+Explanation for sample input 1 :
+There are 2 pairs in the linked list having sum equal to 'k' (= 5).
+
+
+Sample input 2:
+5
+1 10 11 12 27
+7
+
+
+Sample output 2:
+0
+
+
+Explanation for sample output 2
+There is no pair in the linked list with sum equal to 'k' (= 7).
+
+
+Expected Time Complexity :
+The expected time complexity is O('n').
+
+
+Constraints:
+2 <= 'n' <= 10 ^ 4
+1 <= 'data' in any node <= 10 ^ 4
+1 <= 'k' <= 10 ^ 4
+
+'data' in every node is distinct.
+
+Time limit: 1 second
+
+
+
+/**
+ * Definition of doubly linked list:
+ * class Node {
+ * public:
+ *      int data;
+ *      Node *prev;
+ *      Node *next;
+ *      Node() {
+ *          this->data = 0;
+ *          this->prev = NULL;
+ *          this->next = NULL;
+ *      }
+ *      Node(int data) {
+ *          this->data = data;
+ *          this->prev = NULL;
+ *          this->next = NULL;
+ *      }
+ *      Node (int data, Node *next, Node *prev) {
+ *          this -> data = data;
+ *          this -> prev = prev;
+ *          this -> next = next;
+ *      }
+ * };
+ *
+ *************************************************************************/
+#include<bits/stdc++.h>
+vector<pair<int, int>> findPairs(Node* head, int k)
+{
+    // Write your code here.
+      vector<pair<int,int>> ans;
+
+    Node *front,*end;
+
+    front=head;
+
+    end=head;
+
+    while(end->next!=NULL) end=end->next;
+
+    while(front->data<end->data){
+
+        if(front->data+end->data==k){
+
+            ans.push_back(make_pair(front->data,end->data));
+
+            if(front->next->data+end->data==k){
+
+                front=front->next;
+
+            }
+
+            else{
+
+                end=end->prev;
+
+            }
+
+        }
+
+        else if(front->data+end->data<k){
+
+            front=front->next;
+
+        }
+
+        else{
+
+            end=end->prev;
+
+        }
+
+    }
+
+    return ans;   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // unordered_map<int,int> mp;
+    // Node * temp = head;
+    // while(temp != NULL)
+    // {
+    //     v.push_back(temp->data);
+    //     // mp[temp->data]++;
+    //     temp = temp->next;
+    // }
+    
+
+    // for(int i=0;i<v.size();i++)
+    // {
+    //     if(mp.find(abs(v[i]-k)) != mp.end())
+    //     {
+    //         res.push_back({v[i],mp[v[i]-k]});
+    //     }
+    //     mp[v[i]]++;
+    // }
+
+    // return res;
+
+}
