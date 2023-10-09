@@ -1,0 +1,85 @@
+Problem Statement
+Detailed explanation ( Input/output format, Notes, Images )
+Sample Input 1 :
+2
+4
+1 0 0 2
+3
+2 4 2 
+Sample Output 1 :
+2 2 1 0
+4 4 2
+Explanation of the Sample Input 1:
+For the first test case:
+For the given stack the resultant sorted stack would be 0 0 1 2 .  
+For the second test case:
+For the given stack the resultant sorted stack would be 2 2 4 .   
+Sample Input 2 :
+2
+4
+1 2 3 4      
+3   
+5 1 2 
+Sample Output 2 :
+4 3 2 1 
+1 2 3 4
+
+
+
+
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+void sortstack(stack<int> &st,int n)
+{
+    vector<int> v;
+    v.push_back(st.top());
+    st.pop();
+    while(!st.empty())
+    {
+        v.push_back(st.top());
+        st.pop();
+    }
+    
+    sort(v.begin(),v.end());
+    for(int i=0;i<v.size();i++)
+    {
+        st.push(v[i]);
+    }
+}
+
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n,x;
+        cin>>n;
+        stack<int> st;
+        while(n--)
+        {
+            cin>>x;
+            st.push(x);
+        }
+        
+        sortstack(st,n);
+        while(!st.empty())
+        {
+            cout<<st.top()<<" ";
+            st.pop();
+        }
+    }
+
+    return 0;
+}
