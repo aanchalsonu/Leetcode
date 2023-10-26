@@ -1,0 +1,43 @@
+Problem Statement
+
+
+
+Detailed explanation ( Input/output format, Notes, Images )
+Sample Input 1:
+4
+3 3 1 2 
+Sample Output 1:
+2 1
+Explanation Of Sample Output 1:
+'n' = 4, ‘arr’ = {3, 3, 1, 2}
+Answer is {2, 1}
+Here, numbers 1, 2 have occurrence 1 i.e. odd and number 3 have occurrence 2 i.e. even.
+Sample Input 2:
+2
+1 2
+Sample Output 2:
+2 1
+Constraints:
+1 <= n <= 10^5
+1 <= arr[i] <= 10^9
+Time Limit: 1 sec
+Expected Space Complexity:
+Can you solve this in O(1) space complexity?
+
+
+vector<int> twoOddNum(vector<int> arr){
+    // Write your code here.
+    unordered_map<int,int> mp;
+    vector<int> res;
+    for(auto i: arr)
+    {
+        mp[i]++;
+    }
+    for(auto i : mp)
+    {
+        if(i.second%2 != 0)
+        res.push_back(i.first);
+    }
+    sort(res.rbegin(),res.rend());
+    return res;
+}
