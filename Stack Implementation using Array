@@ -1,0 +1,114 @@
+Problem Statement
+
+
+Detailed explanation ( Input/output format, Notes, Images )
+Sample Input 1 :
+2 6
+1 1
+1 2
+2
+3
+4
+5
+Sample Output 1 :
+2 
+1
+0
+0
+Explanation For Sample Output 1 :
+We perform the following operations on an empty stack which has capacity 2:
+
+When operation 1 1 is performed, we insert 1 in the stack.
+
+When operation 1 2  is performed, we insert 2 in the stack. 
+
+When operation 2 is performed, we remove the top element from the stack and print 2.
+
+When operation 3 is performed, we print the top element of the stack, i.e., 1.
+
+When operation 4 is performed, we print 0 because the stack is not empty.
+
+When operation 5 is performed, we print 0 because the stack is size 1, which is not equal to its capacity.
+Sample Input 2 :
+5 5
+1 2
+2
+2 
+1 1
+3
+Sample Output 2 :
+2 
+-1
+1
+Explanation For Sample Output 2 :
+We perform the following operations on an empty stack which has a capacity of 5:
+
+When operation 1 2 is performed, we insert 2 in the stack.
+
+When operation 2 is performed, we remove the top element from the stack and print 2.
+
+When operation 2 is performed, as the stack is empty, we print -1.
+
+When operation 1 1 is performed, we insert 1 in the stack.
+
+When operation 3 is performed, we print the top element of the stack, i.e., 1.
+Constraints :
+1 <= 'n', 'm' <= 10^3
+
+Time Limit: 1 sec
+
+// Stack class.
+class Stack {
+    
+public:
+    int * st;
+    int n;
+    int tp;
+    Stack(int capacity) {
+        // Write your code here.
+        this->n = capacity;
+        st = new int[n];
+        tp=-1;        
+    }
+    
+    void push(int num) {
+        // Write your code here.
+        if(!isFull())
+        st[++tp]=num;
+        else return;
+        
+    }
+
+    int pop() {
+        // Write your code here.
+        if(!isEmpty())
+        {
+            int res = st[tp--];
+            return res;
+        }
+        else return -1;
+    }
+    
+    int top() {
+        // Write your code here.
+        if(tp==-1)
+        return -1;
+        else
+        return st[tp];
+    }
+    
+    int isEmpty() {
+        // Write your code here.
+        if(tp == -1)
+        return 1;
+        else return 0;
+    }
+    
+    int isFull() {
+        // Write your code here.
+        if(tp == n-1)
+        return 1;
+        else return 0;
+    }
+    
+};
