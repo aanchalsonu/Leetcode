@@ -1,0 +1,149 @@
+Problem Statement
+
+
+
+Sample Input 1:
+5
+/A+BC
+
+Sample Output 1 :
+ABC+/
+
+Explanation Of Sample Input 1:
+Input: ‘n’ = 5, ‘s’ = “/A+BC”
+
+Output: ABC+/
+
+Explanation: For ‘s’ = “/A+BC”, the correct postfix expression is “ABC+/”.
+
+
+Sample Input 2:
+9
+-/A+BC*DE
+
+Sample Output 2:
+ABC+/DE*-
+
+Explanation of sample output 2:
+Input: ‘n’ = 9, ‘s’ = “-/A+BC*DE”
+
+Output: ABC+/DE*-
+
+Explanation: For ‘s’ = “-/A+BC*DE”, the correct postfix expression is “ABC+/DE*-”.
+
+Constraints:
+3 <= n < 10^4
+The characters in ‘s’ are either one of {‘+’, ‘-’, ‘/’, ‘*’} or is one of the Uppercase Letters.
+
+Time Limit: 1 sec
+
+
+// #include<bits/stdc++.h>
+
+// int prec(char c)
+// {
+//     if(c == '*')
+//     return 3;
+//     else if(c == '+')
+//     return 2;
+//     else
+//     return 1;
+// }
+
+
+// string preToPost(string s) {
+//     // Write Your Code Here
+//     string res = "";
+//     stack<char> st;
+//     int n = s.size();
+//     for(int i=0;i<n;i++)
+//     {
+//         if(s[i]>='A' && s[i]<='Z' || s[i] >='0' && s[i] <='9')
+//         {
+//             res += s[i];
+//         }
+//         else
+//         {
+//             if(res == "")
+//             st.push(s[i]);
+//             else
+//             {
+//                 while(!st.empty() && prec(st.top()) > prec(s[i]))
+//                 {
+//                     res += st.top();
+//                     st.pop();
+//                 }
+//                 res += st.top();
+//                 st.pop();
+//                 st.push(s[i]);
+//             }
+//         }
+//     }
+//     while(!st.empty())
+//     {
+//         res += st.top();
+//         st.pop();
+//     }
+//     return res;
+
+// }
+
+
+
+#include <stack>
+
+#include <string>
+
+using namespace std;
+
+ 
+
+bool isOperator(char x) {
+
+    switch (x) {
+
+        case '+':
+
+        case '-':
+
+        case '/':
+
+        case '*':
+
+            return true;
+
+    }
+
+    return false;
+
+} string preToPost(string pre_exp) {
+
+    stack<string> s;
+
+    int length = pre_exp.size();
+
+    for (int i = length - 1; i >= 0; i--) {
+
+        if (isOperator(pre_exp[i])) {
+
+            string op1 = s.top(); s.pop();
+
+            string op2 = s.top(); s.pop();
+
+            string temp = op1 + op2 + pre_exp[i];
+
+            s.push(temp);
+
+        }
+
+        else {
+
+            s.push(string(1, pre_exp[i]));
+
+        }
+
+    }
+
+    return s.top();
+
+}
