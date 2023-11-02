@@ -1,0 +1,87 @@
+Problem Statement
+
+
+
+Sample Input 1:
+ab+cd-*
+
+
+Expected Answer:
+*+ab-cd 
+
+
+Output on console:
+*+ab-cd 
+
+
+Explanation Of Sample Input 1:
+For this testcase, the infix expression will be (a + b) * (c - d). Hence, our prefix expression will be *+ab-cd.
+
+
+Sample Input 2:
+ab+c-
+
+
+Expected Answer:
+-+abc
+
+
+Output on console:
+-+abc
+
+
+Expected Time Complexity:
+Try to solve this in O(n), where n is the length of expression.    
+
+
+Constraints:
+1 <= |s| <= 10^5
+
+Time Limit: 1 sec
+
+
+
+
+#include<bits/stdc++.h>
+
+bool isOper(char c)
+{
+    switch(c)
+    {
+        case '+':
+        case '-':
+        case '*':
+        case '/':return true;
+        default:return false;
+    }
+}
+
+string postfixToPrefix(string &s){
+    // Write your code here.
+    reverse(s.begin(),s.end());
+    stack<string> st;
+    string result="";
+    int n=s.length();
+    for(int i= n-1;i>=0;i--)
+    {
+        if((s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/') && !st.empty())
+        {
+            string s1 = st.top();
+            st.pop();
+            string s2 = st.top();
+            st.pop();
+            result = s1+s2+s[i];
+            st.push(result);
+        }
+        else
+        {
+            string str;
+            str += s[i];
+            st.push(str);
+        }
+    }
+    string res = st.top();
+    reverse(res.begin(),res.end());
+    return res;
+
+}
