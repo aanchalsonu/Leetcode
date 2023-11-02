@@ -1,0 +1,79 @@
+Problem Statement
+
+
+
+Sample Input 1:
+*-a/bc-/dkl
+
+
+Expected Answer:
+((a-(b/c))*((d/k)-l))
+
+
+Output on console:
+((a-(b/c))*((d/k)-l))
+
+
+Explanation for Sample Input 1:
+In this testcase, there are five operators ‘*’, ‘-’, ‘/’, ‘-’, ‘/’.
+Prefix Expression: *-a/bc-/dkl.
+The operator between  ‘b’ and ‘c’ is ‘/’. Resulting expression: *-a(b/c)-/dkl.
+The operator between  ‘d’ and ‘k’ is ‘/’. Resulting expression: *-a(b/c)-(d/k)l.
+The operator between  ‘a’ and ‘(b/c)’ is ‘-’. Resulting expression: *(a-(b/c))-(d/k)l.
+The operator between  ‘d/k’ and ‘l’ is ‘-’. Resulting expression: *(a-(b/c))((d/k)-l).
+The operator between  ‘(a-(b/c))’ and ‘((d/k)-l)’ is ‘*’. Resulting expression: ((a-(b/c))*((d/k)-l)).
+
+
+Sample Input 2:
+*-a/bc-/del
+
+
+Expected Answer:
+((a-(b/c))*((d/e)-l))
+
+
+Output on console:
+((a-(b/c))*((d/e)-l))
+
+
+Expected Time Complexity:
+Try to solve this in O(n^2), where n is the length of expression.
+
+
+Constraints:
+1 <= n <= 500
+where n is the length of expression.
+
+Time Limit: 1 sec
+string prefixToInfixConversion(string &s){
+	// Write your code here.
+	string str= "";
+	stack<char> st;
+	int n=s.size();
+	for(int i=0;i<n;i++)
+	{
+		char c = s[i];
+		if(c == '+' || c == '-' || c == '*' || c== '/')
+		{
+			str += '(';
+			st.push('(');
+			st.push(c);
+		}
+		else
+		{
+			str += c;
+			while(!st.empty() && st.top() == '(')
+			{
+				str +=')';
+				st.pop();
+			}
+			if(!st.empty())
+			{
+				str += st.top();
+				st.pop();
+			}
+		}
+	}
+	return str;
+
+}
