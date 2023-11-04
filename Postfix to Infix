@@ -1,0 +1,51 @@
+Problem Statement
+
+
+
+
+Sample Input 1:
+5
+ab+c+
+Sample Output 1:
+((a+b)+c)
+
+
+Explanation Of Sample Input 1 :
+The expression “((a+b)+c)” in infix is equivalent to “ab+c+” in postfix.
+
+
+Sample Input 2 :
+9
+ABC/DA-*+
+Sample Output 2 :
+(A+((B/C)*(D-A)))
+
+
+Constraints:
+3 <= ‘postfix.length’ <= 10^4
+
+string postToInfix(string s) {
+    // Write your code here.
+
+    stack<string> st;
+    int n = s.length();
+    string res="";
+    for(int i=0;i<n;i++)
+    {
+        char c = s[i];
+        if((c >= 'a' && c<='z') || (c>='A' && c<='Z'))
+        {
+            string str(1,c);
+            st.push(str);
+        }
+        else {
+            string s1 = st.top();
+            st.pop();
+            string s2 = st.top();
+            st.pop();
+            res = '(' + s2 + c + s1 + ')';
+            st.push(res);
+        }
+    }
+    return res;
+}
