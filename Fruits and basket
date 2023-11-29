@@ -1,0 +1,91 @@
+roblem statement
+
+
+
+
+
+
+
+
+Sample Input 1:
+4
+1 1 2 3
+Sample Output 1:
+3 
+Explanation of Sample Input 1:
+There are four trees and the type of fruits in them are 1, 1, 2, 3 respectively.
+
+One way is that Ninja can start picking fruits from tree 0. He picks one fruit from tree 0 and put it in the first basket, then
+he picks one fruit from tree 1 and put it in the first basket, then he picks one fruit from tree 2 and put it in the second basket,
+he cannot pick fruit from tree 3 because the first basket has the fruit of type 1 and second has the fruit of type 2 and type of fruit in tree-3 is 3. 
+
+Thus he has to stop there. The number of fruits he picks in this way is 3. We can show that this is the maximum possible number of fruits ninjas can pick.
+Sample Input 2:
+4
+1 2 3 4
+Sample Output 2:
+2
+Explanation of Sample Input 2:
+There are four trees, and each of them has different types of fruit. No matter from which tree Ninja starts picking fruits he can only collect 2 fruits.
+Constraints:
+1 <= n <= 10^4
+1 <= arr[I] <= n
+Where ‘n’ represents the number of trees.
+
+
+Time limit: 1 sec
+
+
+bool cmp(std::pair<int, int>& a, std::pair<int, int>& b) {
+    return a.first > b.first;
+}
+
+int findMaxFruits(std::vector<int>& arr, int n) {
+    //int max1 = 0, max2 = 0;
+    std::unordered_map<int, int> mp;
+    std::vector<std::pair<int, int>> v;
+
+    int i=0,j=0;
+    int len=0;
+
+    while(j<n)
+    {
+        mp[arr[j]]++;
+
+        while(mp.size()>2)
+        {
+            mp[arr[i]]--;
+            if(mp[arr[i]] == 0)
+            mp.erase(arr[i]);
+            i++;
+        }
+        len = max(len, j-i+1);
+        j++;
+    }
+
+    
+
+    return len;
+
+
+    // for (const auto& i : mp) {
+    //     v.push_back({i.second, i.first});
+    // }
+
+
+
+    // std::sort(v.begin(), v.end(), cmp);
+
+    // // Handle the case where there might be fewer than 2 distinct fruits
+    // int res = 0;
+    // if (v.size() > 0) {
+    //     res += v[0].first;
+    // }
+    // if (v.size() > 1) {
+    //     res += v[1].first;
+    // }
+// 
+    // return res;
+}
+
+
