@@ -1,0 +1,64 @@
+Problem statement
+
+
+
+
+
+
+Sample Input 1 :
+6
+1 2 3 4 5 6
+Sample Output 1:
+true
+Explanation to Sample Input 1:
+The min-heap representation is:-
+
+One of the possible max heap for a given min-heap 
+is [6,5,4,2,3,1]
+
+Sample Input 2:
+7
+3 5 6 7 9 12 7 
+Sample Output 2:
+true
+Constraints:
+1 <= ’N’ <= 5000
+1 <= arr[ i ] <= 10^5
+
+where, 'N' denotes the size of the array and arr[i] denotes the elements of the input array.
+
+Time Limit : 1 sec
+
+
+// vector<int>MinToMaxHeap(int n, vector<int>&arr)
+// {
+// 	// Write your code here.
+// 	sort(arr.begin(), arr.end());
+// 	reverse(arr.begin(), arr.end());
+// 	return arr;
+// }
+
+
+
+vector<int>MinToMaxHeap(int n, vector<int>&arr)
+{
+	for(int i=1; i<n; i++){
+		int ci=i;
+		while(true){
+			int pi=(ci-1)/2;
+			if(pi>=0){
+				if(arr[ci]>arr[pi]){
+					swap(arr[ci], arr[pi]);
+					ci=pi;
+				}
+				else{
+					break;
+				}
+			}
+			else{
+				break;
+			}
+		}
+	}
+	return arr;
+}
