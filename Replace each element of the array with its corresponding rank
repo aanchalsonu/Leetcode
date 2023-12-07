@@ -1,0 +1,115 @@
+Problem statement
+
+
+
+
+Sample Input 1 :
+2
+4 -1
+Sample Output 1 :
+2 1 
+Explanation Of Sample Input 1 :
+Here, 4 is the largest element and -1 is the smallest element.
+
+So, the rank of 4 is 2.
+
+The rank of -1 is 1.
+
+Thus after replacing elements with their rank we get [2, 1].
+Sample Input 2 :
+5
+1 2 6 9 2 
+Sample Output 2 :
+1 2 3 4 2
+Explanation Of Sample Input 2 :
+Here, 1 is the smallest element, 2 is the second-smallest element and 6 is the third-smallest element and 9 is the largest element.
+
+So, the rank of 1 should be 1.
+
+The rank of 2 should be 2.
+
+The rank of 6 should be 3.
+
+The rank of 9 should be 4.
+
+Thus after replacing elements with their rank we get [1, 2, 3, 4, 2]
+Constraints :
+1 <= N <= 10^4
+-10^9  <= ARR[i] <= 10^9
+
+Where 'ARR[i]' denotes the 'ith' element of the array.
+
+Time limit: 1 sec
+
+// vector<int> replaceWithRank(vector<int> &arr, int n) {
+//     // Write your code here.
+//     vector<int> res;
+//     unordered_map<int,int> mp;
+//     vector<int> temp = arr;
+//     sort(temp.begin(),temp.end());
+//     int j=1;
+
+    
+//     for(int i=0;i<temp.size();i++)
+//     {
+//         if(temp[i] == temp[i+1])
+//         mp[temp[i]] = j;
+//         else
+//         mp[temp[i]] = j++;
+//     }
+
+//     for(int i=0;i<arr.size();i++)
+//     {
+//         res.push_back(mp[arr[i]]);
+//     }
+//     return res;
+
+
+// }
+
+
+vector<int> replaceWithRank(vector<int> &arr, int n) {
+
+    vector<int>ans(n);
+
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+
+    
+
+    for(int i=0;i<n;i++){
+
+        pq.push({arr[i],i});    //push {elements,i} in pq
+
+    }
+
+ 
+
+    int rank=0;
+
+    int lastel=INT_MIN;         //for the equal elements check
+
+ 
+
+    while(pq.size()){
+
+        pair<int,int>temp=pq.top();
+
+        if(temp.first!=lastel){     //if the elements are not equal
+
+            rank++;
+
+            lastel=temp.first;
+
+        }
+
+        ans[temp.second]=rank;  //store the rank in ans
+
+        pq.pop();               //pop the element;
+
+ 
+
+    }
+
+    return ans;
+
+}
