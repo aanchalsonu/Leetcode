@@ -1,0 +1,77 @@
+Problem statement
+
+Given a array that contains integers  representing the values of nodes in a binary tree
+the array represents the level order traversal. 
+create a binary tree and reuturn the root node
+
+
+Sample Input 1:
+1 2 3 4 5 6 7
+Sample Output 1:
+1
+Explanation Of Sample Input 1:
+The 7 node binary tree is represented below.
+
+Sample Input 2:
+11 22 3 54 15 23 21
+Sample Output 2:
+11
+Constraints:
+arr.length = 7
+1<=arr[i]<=100
+Time Limit: 1 sec
+
+
+
+/*
+Following is the class structure of the Node class:
+
+class Node
+{
+public:
+    int data;
+    Node *left, *right;
+    Node()
+    {
+        this->data = 0;
+        left = NULL;
+    }
+    Node(int data)
+    {
+        this->data = data; 
+        this->left = NULL;
+        this->right = NULL;
+    }
+    Node(int data, Node* left, Node* right)
+    {
+        this->data = data;
+        this->left = left;
+        this->right = right;
+    }
+};
+*/
+
+Node* createTree(vector<int>&arr){
+    // Write your code here.
+    Node * root = new Node(arr[0]);
+    queue<Node *> q;
+    q.push(root);
+    int i=1;
+    while(i < arr.size())
+    {
+        Node * front = q.front();
+        q.pop();
+        if(front->left == NULL)
+        {
+            front->left = new Node(arr[i++]);
+            q.push(front->left);
+        }
+        if(front->right == NULL)
+        {
+            front->right = new Node(arr[i++]);
+            q.push(front->right);
+        }
+    }
+    return root;
+
+}
