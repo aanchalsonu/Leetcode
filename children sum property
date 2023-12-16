@@ -1,0 +1,84 @@
+Problem statement
+Return true if all the non leaf node in a binary tree have a value equal to sum of its child nodes, 
+Otherwise return false
+
+
+Sample Input 1:
+4
+5 3 2 3 -1 -1 -1 -1 -1
+Sample Output 1:
+true
+Explanation Of Sample Input 1:
+
+Node 1: The sum of its child nodes is 3 + 2 = 5, which is equal to its value.
+Node 2: The sum of its child nodes is 3, which is equal to its value.
+Node 3: It is a leaf node with no child nodes, so the condition is satisfied.
+Node 4: It is a leaf node with no child nodes, so the condition is satisfied.
+Sample Input 2:
+6
+7 3 4 3 -1 2 3 -1 -1 -1 -1 -1 -1
+Sample Output 2:
+false
+Explanation Of Sample Input 2:
+
+Node 1: The sum of its child nodes is 3 + 4 = 7, which is equal to its value.
+Node 2: The sum of its child nodes is 3, which is equal to its value.
+Node 3: The sum of its child nodes is 2 + 3 = 5, which is not equal to its value 4, so the condition is not satisfied. Hence the answer is false.
+Constraints:
+1 <= N <= 10^3
+1 <= data <= 10^5
+Time Limit: 1 sec
+
+
+
+
+
+/*
+Following is the class structure of the Node class:
+
+class Node
+{
+public:
+    int data;
+    Node *left, *right;
+    Node()
+    {
+        this->data = 0;
+        left = NULL;
+    }
+    Node(int data)
+    {
+        this->data = data; 
+        this->left = NULL;
+        this->right = NULL;
+    }
+    Node(int data, Node* left, Node* right)
+    {
+        this->data = data;
+        this->left = left;
+        this->right = right;
+    }
+};
+*/
+
+
+bool isParentSum(Node *root){
+    // Write your code here.
+
+    int child=0;
+
+    if(root ==  NULL)
+    return true;
+
+    if(root->left)
+    child += root->left->data;
+    if(root->right)
+    child += root->right->data;
+
+    if(child != root->data && child!= 0)
+    return false;
+
+    return isParentSum(root->left) && isParentSum(root->right);
+
+
+}
