@@ -1,0 +1,27 @@
+Problem statement
+
+Given a pair of tree traversal return true if a unique binary tree can be constructed else return false
+
+Sample Input 1:
+1 2
+Sample Output 1:
+True 
+Explanation of sample output 1:
+For 'a' = 1, ‘b’ = 2.
+
+Answer is True.
+
+It is possible to construct a unique binary tree. This is because the preorder traversal provides the root of the tree, and the inorder traversal helps determine the left and right subtrees.
+Sample Input 2:
+2 2
+Sample Output 2:
+False
+Constraints:
+1 <= ‘a’, ‘b’ <= 3
+
+
+
+int uniqueBinaryTree(int a, int b){
+    // Write your code here.
+    return ((a==2 || b==2) && a!= b);
+}
