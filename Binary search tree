@@ -1,0 +1,36 @@
+Problem statement
+You are given a inorder traversal of binray tree
+Return true if its a valid binary tree else false
+
+
+Sample Input 1:
+6
+2 3 5 8 9 10
+Sample Output 1:
+true   
+Explanation of sample output 1:
+In this testcase, ‘order’ = {2, 3, 5, 8, 9, 10} is a valid inorder traversal for the following binary search tree:
+
+      8
+    /   \
+  3      9
+ / \       \
+2   5       10
+Sample Input 2:
+4
+1 2 1 4
+Sample Output 2:
+false
+
+
+bool isValidBST(vector<int> &order){
+    // Write your code here.
+    for(int i=0;i<order.size()-1;i++)
+    {
+        if(order[i] >= order[i+1])
+        return false;
+    }
+    return true;
+
+
+}
