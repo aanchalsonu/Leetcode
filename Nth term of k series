@@ -1,0 +1,53 @@
+/*****************************************************************************
+
+Nth number in K number Series
+where the series contains numbers divisible by number k and if the number has a digit
+k
+*******************************************************************************/
+#include <iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+bool hask(int n,int k)
+{
+    int r=0;
+    while(n!=0)
+    {
+        r = n%10;
+        if(r == k)
+        return true;
+        n = n/10;
+    }
+    return false;
+}
+
+int main()
+{
+    int n,k;
+    
+    cout<<"Enter n and K value : ";
+    cin>>n>>k;
+    
+    vector<int> v;
+    int m=n;
+    
+    for(int i=1;i<100;i++)
+    {
+        if(n<=0)
+        break;
+        else
+        {
+            if(i%k == 0 || hask(i,k))
+            {
+                v.push_back(i);
+                cout<<i<<" ";
+                n--;
+            }
+        }
+    }
+    
+    cout<<endl<<v[m-1]<<endl;
+
+    return 0;
+}
