@@ -1,0 +1,39 @@
+/*****************************************************************************
+
+Number of carries:
+given 2 numbers count the number of carries generated when the digits of numbers are added 
+
+*******************************************************************************/
+#include <iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+
+
+int main()
+{
+    int n1,n2,sum=0,c=0,count=0;
+    
+    cout<<"Enter the numbers : ";
+    cin>>n1>>n2;
+    
+    int n = n1;
+    int m = n2;
+    
+    while(n !=0 && m!=0)
+    {
+        int r1= n%10;
+        int r2= m%10;
+        sum = c + r1 + r2;
+        if(sum > 9)
+        count++;
+        c = sum %10;
+        n = n/10;
+        m = m/10;
+    }
+    
+    cout<<endl<<count<<endl;
+
+    return 0;
+}
