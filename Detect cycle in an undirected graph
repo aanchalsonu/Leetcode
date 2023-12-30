@@ -1,0 +1,52 @@
+Problem statement
+Given an undirected graph of 'V' vertices and 'E' edges. Return true if the graph contains a cycle or not, else return false.
+
+
+
+Note:
+
+There are no self-loops(an edge connecting the vertex to itself) in the given graph.
+Example:
+Given N=3, M =2, and edges are (1, 2) and (2, 3), with nodes 1, 2, and 3.
+
+We return false because the given graph does not have any cycle.
+
+Detailed explanation ( Input/output format, Notes, Images )
+Constraints:
+1 <= V <= 10^5
+0 <= E <= 2 * 10^5
+0 <= u,v < V
+
+Time Limit: 1sec
+
+
+class Graph {
+public:
+    bool isCyclicUtil(int v, vector<int> adj[], vector<bool>& visited, int parent) {
+        visited[v] = true;
+
+        for (int i : adj[v]) {
+            if (!visited[i]) {
+                if (isCyclicUtil(i, adj, visited, v))
+                    return true;
+            } else if (i != parent) {
+                // If the adjacent vertex is visited and not the parent of the current vertex,
+                // then there is a cycle.
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool detectCycle(int V, vector<int> adj[]) {
+        vector<bool> visited(V, false);
+
+        for (int i = 0; i < V; ++i) {
+            if (!visited[i] && isCyclicUtil(i, adj, visited, -1))
+                return true;
+        }
+
+        return false;
+    }
+};
